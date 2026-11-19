@@ -1,0 +1,3734 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>KI - Bidang Tata Ruang dan Pertanahan | Aplikasi Pekerjaanku</title>
+  <meta name="description" content="Aplikasi Pekerjaanku merupakan aplikasi database kerja untuk mencatat, mengelola, memantau, dan mengekspor aktivitas pekerjaan Konsultan Individual Bidang Tata Ruang dan Pertanahan.">
+  <meta name="keywords" content="KI Bidang Tata Ruang dan Pertanahan, Aplikasi Pekerjaanku, Database Pekerjaan, Administrasi Pekerjaan, Monitoring Pekerjaan, Konsultan Individual, Tata Ruang, Pertanahan">
+  <meta name="author" content="PT. GISTARIAU GEOSPASIAL SOLUTION">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#1E463A">
+
+  <!-- Open Graph Metadata -->
+  <meta property="og:title" content="KI - Bidang Tata Ruang dan Pertanahan | Aplikasi Pekerjaanku">
+  <meta property="og:description" content="Aplikasi Pekerjaanku merupakan aplikasi database kerja untuk mencatat, mengelola, memantau, dan mengekspor aktivitas pekerjaan Konsultan Individual Bidang Tata Ruang dan Pertanahan.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="id_ID">
+  <meta property="og:image" content="https://lh3.googleusercontent.com/a/ACg8ocKwa56EqjiXGTcTzJCjhlvHVD1_cjafyhnuBK5As9X9z1r7tS8J=s360-c-no">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/a/ACg8ocKwa56EqjiXGTcTzJCjhlvHVD1_cjafyhnuBK5As9X9z1r7tS8J=s360-c-no">
+  <link rel="apple-touch-icon" href="https://lh3.googleusercontent.com/a/ACg8ocKwa56EqjiXGTcTzJCjhlvHVD1_cjafyhnuBK5As9X9z1r7tS8J=s360-c-no">
+
+  <!-- Google Fonts: Retro Modern Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Chart.js untuk Visualisasi Statistik Database Aktual -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+
+  <style>
+    :root {
+      /* Palet Warna Retro Modern */
+      --bg-cream: #F5EFE4;
+      --bg-ivory: #FFFDF8;
+      --bg-sand: #EAE0CE;
+      --bg-sand-dark: #DDD0BA;
+
+      --green-deep: #1E463A;
+      --green-dark: #143229;
+      --green-muted: #2F6655;
+      --green-tint: #E4EFEA;
+
+      --brown-ink: #362419;
+      --brown-muted: #6C5A4C;
+      --terracotta: #C66837;
+      --terracotta-dark: #A85225;
+      --terracotta-tint: #F9EBE3;
+      --brass-gold: #C28F38;
+      --brass-tint: #FAF2E1;
+
+      --danger: #B83832;
+      --danger-tint: #FBE9E8;
+      --success: #25684A;
+      --success-tint: #E5F3EC;
+
+      --border-retro: #CFC0A8;
+      --shadow-retro: 4px 4px 0px #D4C5AE;
+      --shadow-retro-sm: 2px 2px 0px #D4C5AE;
+      --shadow-modal: 0 20px 45px rgba(54, 36, 25, 0.25);
+
+      --font-display: 'Fraunces', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --sidebar-width: 272px;
+      --transition: all 0.22s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      min-height: 100vh;
+      background-color: var(--bg-cream);
+      color: var(--brown-ink);
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Pola Latar Belakang Kartografi / Topografi Halus */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(rgba(30, 70, 58, 0.06) 1px, transparent 1px),
+        linear-gradient(to right, rgba(207, 192, 168, 0.18) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(207, 192, 168, 0.18) 1px, transparent 1px);
+      background-size: 24px 24px, 96px 96px, 96px 96px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* ========================
+       KOMPONEN LOGO & FALLBACK
+       ======================== */
+    .brand-logo-wrap {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--bg-ivory);
+      border: 2px solid var(--brass-gold);
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 3px 10px rgba(54, 36, 25, 0.12);
+    }
+
+    .brand-logo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      padding: 3px;
+    }
+
+    .brand-logo-fallback {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--green-deep);
+      color: var(--bg-ivory);
+      font-family: var(--font-display);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    /* ========================
+       HALAMAN LOGIN RETRO MODERN
+       ======================== */
+    .login-wrapper {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 24px 16px;
+    }
+
+    .login-center {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 0;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 440px;
+      background: var(--bg-ivory);
+      border: 2px solid var(--brown-ink);
+      border-radius: var(--radius-lg);
+      box-shadow: 7px 7px 0px var(--green-deep);
+      overflow: hidden;
+      animation: fadeSlideUp 0.4s ease;
+    }
+
+    .login-banner {
+      background: var(--green-deep);
+      color: var(--bg-ivory);
+      padding: 28px 24px 24px;
+      text-align: center;
+      border-bottom: 3px solid var(--brass-gold);
+      position: relative;
+    }
+
+    .login-badge-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      background: rgba(255, 253, 248, 0.14);
+      color: #F4DFB6;
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(194, 143, 56, 0.55);
+      margin-bottom: 14px;
+    }
+
+    .login-logo-box {
+      width: 78px;
+      height: 78px;
+      margin: 0 auto 14px;
+    }
+
+    .login-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--bg-ivory);
+      margin-bottom: 4px;
+    }
+
+    .login-subtitle {
+      font-size: 0.88rem;
+      color: #D7E3DE;
+      font-weight: 500;
+    }
+
+    .login-body {
+      padding: 28px 26px 26px;
+    }
+
+    .login-alert {
+      background: var(--danger-tint);
+      border: 1.5px solid var(--danger);
+      color: var(--danger);
+      padding: 11px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.86rem;
+      font-weight: 600;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+    }
+
+    .login-alert.info {
+      background: var(--brass-tint);
+      border-color: var(--brass-gold);
+      color: #7D5614;
+    }
+
+    /* ========================
+       FORMULIR & INPUT RETRO
+       ======================== */
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--brown-ink);
+      margin-bottom: 6px;
+      letter-spacing: 0.2px;
+    }
+
+    .form-label .required-mark {
+      color: var(--terracotta);
+      margin-left: 3px;
+    }
+
+    .form-hint {
+      font-size: 0.78rem;
+      color: var(--brown-muted);
+      margin-top: 5px;
+    }
+
+    .input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon-left {
+      position: absolute;
+      left: 13px;
+      color: var(--brown-muted);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .form-control {
+      width: 100%;
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-retro);
+      border-radius: var(--radius-sm);
+      padding: 10px 13px;
+      font-family: var(--font-sans);
+      font-size: 0.93rem;
+      color: var(--brown-ink);
+      transition: var(--transition);
+    }
+
+    .form-control.has-left-icon {
+      padding-left: 40px;
+    }
+
+    .form-control.has-right-btn {
+      padding-right: 44px;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--green-deep);
+      box-shadow: 0 0 0 3px rgba(30, 70, 58, 0.14);
+    }
+
+    .form-control:disabled, .form-control[readonly] {
+      background: var(--bg-sand);
+      color: var(--brown-muted);
+      cursor: not-allowed;
+    }
+
+    textarea.form-control {
+      min-height: 120px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    .password-toggle-btn {
+      position: absolute;
+      right: 8px;
+      background: transparent;
+      border: none;
+      color: var(--brown-muted);
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .password-toggle-btn:hover {
+      color: var(--green-deep);
+      background: var(--bg-sand);
+    }
+
+    /* ========================
+       TOMBOL RETRO MODERN
+       ======================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 10px 18px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .btn:disabled {
+      opacity: 0.62;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    .btn-primary {
+      background: var(--green-deep);
+      color: var(--bg-ivory);
+      border-color: var(--green-dark);
+      box-shadow: 3px 3px 0px var(--brown-ink);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--green-dark);
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0px var(--brown-ink);
+    }
+
+    .btn-accent {
+      background: var(--terracotta);
+      color: #FFFFFF;
+      border-color: var(--terracotta-dark);
+      box-shadow: 3px 3px 0px var(--brown-ink);
+    }
+
+    .btn-accent:hover:not(:disabled) {
+      background: var(--terracotta-dark);
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0px var(--brown-ink);
+    }
+
+    .btn-secondary {
+      background: var(--bg-ivory);
+      color: var(--brown-ink);
+      border-color: var(--brown-ink);
+      box-shadow: 2px 2px 0px var(--border-retro);
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: var(--bg-sand);
+      transform: translate(-1px, -1px);
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: #FFFFFF;
+      border-color: #8E2520;
+    }
+
+    .btn-danger:hover:not(:disabled) {
+      background: #9B2B26;
+    }
+
+    .btn-sm {
+      padding: 6px 11px;
+      font-size: 0.8rem;
+      gap: 5px;
+    }
+
+    .btn-block {
+      width: 100%;
+    }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2.5px solid rgba(255, 255, 255, 0.35);
+      border-top-color: #FFFFFF;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: inline-block;
+    }
+
+    .spinner.dark {
+      border-color: rgba(30, 70, 58, 0.25);
+      border-top-color: var(--green-deep);
+    }
+
+    /* ========================
+       LAYOUT UTAMA APLIKASI
+       ======================== */
+    .app-shell {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar Navigasi */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: var(--green-deep);
+      color: var(--bg-ivory);
+      border-right: 2px solid var(--brown-ink);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 100;
+      transition: transform 0.28s ease;
+    }
+
+    .sidebar-header {
+      padding: 20px 18px;
+      border-bottom: 2px solid rgba(194, 143, 56, 0.45);
+      background: var(--green-dark);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sidebar-logo {
+      width: 46px;
+      height: 46px;
+    }
+
+    .sidebar-brand-text h1 {
+      font-family: var(--font-display);
+      font-size: 0.96rem;
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--bg-ivory);
+    }
+
+    .sidebar-brand-text span {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: #E8C784;
+      margin-top: 3px;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 16px 12px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .nav-section-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #9EBAB0;
+      padding: 8px 12px 4px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 11px 14px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid transparent;
+      background: transparent;
+      color: #E6EFEA;
+      font-family: var(--font-sans);
+      font-size: 0.92rem;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .nav-item:hover {
+      background: rgba(255, 253, 248, 0.1);
+      color: #FFFFFF;
+    }
+
+    .nav-item.active {
+      background: var(--bg-cream);
+      color: var(--brown-ink);
+      border-color: var(--brown-ink);
+      box-shadow: 3px 3px 0px var(--brass-gold);
+      font-weight: 700;
+    }
+
+    .nav-item.active svg {
+      color: var(--terracotta);
+    }
+
+    .nav-item.logout-btn {
+      margin-top: auto;
+      color: #F7C7BE;
+      border-color: rgba(247, 199, 190, 0.25);
+    }
+
+    .nav-item.logout-btn:hover {
+      background: var(--danger);
+      color: #FFFFFF;
+      border-color: #FFFFFF;
+    }
+
+    .sidebar-footer-info {
+      padding: 12px 16px;
+      background: rgba(0, 0, 0, 0.18);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.75rem;
+      color: #BFD2CB;
+    }
+
+    .sidebar-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 50, 41, 0.55);
+      backdrop-filter: blur(2px);
+      z-index: 90;
+      display: none;
+    }
+
+    .sidebar-backdrop.show {
+      display: block;
+    }
+
+    /* Area Konten Utama */
+    .main-area {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      width: calc(100% - var(--sidebar-width));
+    }
+
+    .topbar {
+      background: var(--bg-ivory);
+      border-bottom: 2px solid var(--border-retro);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: var(--bg-cream);
+      border: 1.5px solid var(--brown-ink);
+      color: var(--brown-ink);
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+    }
+
+    .page-heading-group h2 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--brown-ink);
+      line-height: 1.2;
+    }
+
+    .page-heading-group p {
+      font-size: 0.8rem;
+      color: var(--brown-muted);
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .wib-clock-badge {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      background: var(--bg-sand);
+      border: 1px solid var(--border-retro);
+      color: var(--brown-ink);
+      padding: 6px 11px;
+      border-radius: var(--radius-sm);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .user-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--green-tint);
+      border: 1.5px solid var(--green-deep);
+      color: var(--green-deep);
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .content-container {
+      flex: 1;
+      padding: 24px;
+      max-width: 1380px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* ========================
+       KARTU RETRO MODERN
+       ======================== */
+    .retro-card {
+      background: var(--bg-ivory);
+      border: 1.5px solid var(--brown-ink);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-retro);
+      padding: 22px;
+      margin-bottom: 22px;
+    }
+
+    .retro-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+      border-bottom: 1.5px dashed var(--border-retro);
+    }
+
+    .retro-card-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--brown-ink);
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    /* Kartu Statistik Dashboard */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: var(--bg-ivory);
+      border: 1.5px solid var(--brown-ink);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-retro);
+      padding: 18px 20px;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .stat-card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: var(--green-deep);
+    }
+
+    .stat-card.terracotta::after {
+      background: var(--terracotta);
+    }
+
+    .stat-card.gold::after {
+      background: var(--brass-gold);
+    }
+
+    .stat-card.brown::after {
+      background: var(--brown-ink);
+    }
+
+    .stat-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--brown-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .stat-icon-box {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-sm);
+      background: var(--green-tint);
+      color: var(--green-deep);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid rgba(30, 70, 58, 0.25);
+    }
+
+    .stat-card.terracotta .stat-icon-box {
+      background: var(--terracotta-tint);
+      color: var(--terracotta);
+      border-color: rgba(198, 104, 55, 0.25);
+    }
+
+    .stat-card.gold .stat-icon-box {
+      background: var(--brass-tint);
+      color: #9A6B19;
+      border-color: rgba(194, 143, 56, 0.3);
+    }
+
+    .stat-card.brown .stat-icon-box {
+      background: var(--bg-sand);
+      color: var(--brown-ink);
+      border-color: var(--border-retro);
+    }
+
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--brown-ink);
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+
+    .stat-sub {
+      font-size: 0.78rem;
+      color: var(--brown-muted);
+    }
+
+    /* Grid Grafik Dashboard */
+    .charts-two-col {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 20px;
+    }
+
+    .chart-canvas-box {
+      position: relative;
+      height: 330px;
+      width: 100%;
+    }
+
+    .monthly-summary-strip {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1.5px dashed var(--border-retro);
+    }
+
+    .month-pill {
+      background: var(--bg-cream);
+      border: 1px solid var(--border-retro);
+      border-radius: var(--radius-sm);
+      padding: 8px 6px;
+      text-align: center;
+    }
+
+    .month-pill .m-name {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--brown-muted);
+      font-weight: 600;
+    }
+
+    .month-pill .m-val {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--green-deep);
+      margin-top: 2px;
+    }
+
+    /* ========================
+       TABEL DATA PEKERJAAN
+       ======================== */
+    .filter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+      gap: 14px;
+      align-items: end;
+    }
+
+    .table-responsive-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border: 1.5px solid var(--brown-ink);
+      border-radius: var(--radius-sm);
+      background: #FFFFFF;
+    }
+
+    .retro-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 780px;
+    }
+
+    .retro-table thead {
+      background: var(--green-deep);
+      color: var(--bg-ivory);
+    }
+
+    .retro-table th {
+      padding: 13px 14px;
+      text-align: left;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      border-bottom: 2px solid var(--brown-ink);
+      white-space: nowrap;
+    }
+
+    .retro-table td {
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--bg-sand-dark);
+      vertical-align: top;
+      font-size: 0.9rem;
+    }
+
+    .retro-table tbody tr:nth-child(even) {
+      background: #FCF9F2;
+    }
+
+    .retro-table tbody tr:hover {
+      background: var(--brass-tint);
+    }
+
+    .col-no {
+      width: 62px;
+      text-align: center !important;
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+
+    .col-date {
+      width: 130px;
+      white-space: nowrap;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+    }
+
+    .col-jenis {
+      width: 220px;
+    }
+
+    .col-aksi {
+      width: 165px;
+      white-space: nowrap;
+      text-align: center !important;
+    }
+
+    .jenis-badge {
+      display: inline-block;
+      background: var(--green-tint);
+      color: var(--green-deep);
+      border: 1px solid rgba(30, 70, 58, 0.35);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.79rem;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .pekerjaan-text {
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: var(--brown-ink);
+      line-height: 1.55;
+      min-width: 260px;
+    }
+
+    .action-btn-group {
+      display: inline-flex;
+      gap: 6px;
+      justify-content: center;
+    }
+
+    /* Pagination */
+    .table-footer-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .pagination-info {
+      font-size: 0.84rem;
+      color: var(--brown-muted);
+      font-weight: 600;
+    }
+
+    .pagination-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    /* ========================
+       EMPTY STATE
+       ======================== */
+    .empty-state {
+      text-align: center;
+      padding: 44px 20px;
+      background: var(--bg-cream);
+      border: 1.5px dashed var(--border-retro);
+      border-radius: var(--radius-md);
+    }
+
+    .empty-state-icon {
+      width: 54px;
+      height: 54px;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      background: var(--bg-sand);
+      color: var(--brown-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .empty-state h4 {
+      font-family: var(--font-display);
+      font-size: 1.08rem;
+      color: var(--brown-ink);
+      margin-bottom: 5px;
+    }
+
+    .empty-state p {
+      font-size: 0.86rem;
+      color: var(--brown-muted);
+      max-width: 440px;
+      margin: 0 auto 16px;
+    }
+
+    /* ========================
+       EKSPOR DATA GRID
+       ======================== */
+    .export-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+
+    .export-preview-box {
+      background: var(--bg-cream);
+      border: 1px solid var(--border-retro);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      font-size: 0.84rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    /* ========================
+       MODAL DIALOG RETRO
+       ======================== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 50, 41, 0.6);
+      backdrop-filter: blur(2px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      animation: fadeIn 0.18s ease;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 560px;
+      background: var(--bg-ivory);
+      border: 2px solid var(--brown-ink);
+      border-radius: var(--radius-lg);
+      box-shadow: 7px 7px 0px var(--brown-ink);
+      overflow: hidden;
+      animation: fadeSlideUp 0.22s ease;
+    }
+
+    .modal-box.sm {
+      max-width: 440px;
+    }
+
+    .modal-header {
+      background: var(--green-deep);
+      color: var(--bg-ivory);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--brass-gold);
+    }
+
+    .modal-header.danger {
+      background: var(--danger);
+      border-bottom-color: var(--brown-ink);
+    }
+
+    .modal-header h3 {
+      font-family: var(--font-display);
+      font-size: 1.08rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-close-btn {
+      background: rgba(255, 255, 255, 0.15);
+      border: none;
+      color: #FFFFFF;
+      width: 30px;
+      height: 30px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-close-btn:hover {
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    .modal-body {
+      padding: 20px;
+    }
+
+    .modal-footer {
+      padding: 14px 20px;
+      background: var(--bg-cream);
+      border-top: 1.5px solid var(--border-retro);
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* ========================
+       TOAST NOTIFIKASI
+       ======================== */
+    .toast-container {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 390px;
+      width: calc(100% - 36px);
+      pointer-events: none;
+    }
+
+    .toast-item {
+      pointer-events: auto;
+      background: var(--bg-ivory);
+      border: 2px solid var(--brown-ink);
+      border-left: 6px solid var(--green-deep);
+      border-radius: var(--radius-sm);
+      box-shadow: 4px 4px 0px rgba(54, 36, 25, 0.35);
+      padding: 12px 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      animation: fadeSlideUp 0.22s ease;
+    }
+
+    .toast-item.error {
+      border-left-color: var(--danger);
+    }
+
+    .toast-item.warning {
+      border-left-color: var(--brass-gold);
+    }
+
+    .toast-content {
+      flex: 1;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--brown-ink);
+    }
+
+    /* ========================
+       FOOTER APLIKASI
+       ======================== */
+    .app-footer {
+      background: var(--bg-ivory);
+      border-top: 2px solid var(--brown-ink);
+      padding: 18px 24px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--brown-muted);
+      line-height: 1.7;
+      margin-top: auto;
+    }
+
+    .app-footer strong {
+      color: var(--brown-ink);
+    }
+
+    .app-footer a {
+      color: var(--terracotta);
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .app-footer a:hover {
+      color: var(--green-deep);
+    }
+
+    /* ========================
+       ANIMASI & RESPONSIVITAS
+       ======================== */
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 1140px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .charts-two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 960px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      .main-area {
+        margin-left: 0;
+        width: 100%;
+      }
+      .mobile-menu-btn {
+        display: inline-flex;
+      }
+      .export-grid {
+        grid-template-columns: 1fr;
+      }
+      .monthly-summary-strip {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      .content-container {
+        padding: 16px 12px;
+      }
+      .topbar {
+        padding: 12px 14px;
+      }
+      .wib-clock-badge {
+        display: none;
+      }
+      .monthly-summary-strip {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .retro-card {
+        padding: 16px 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Container Notifikasi Toast -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <!-- ==========================================
+       HALAMAN LOGIN (RETRO MODERN)
+       ========================================== -->
+  <section id="loginView" class="login-wrapper">
+    <div class="login-center">
+      <div class="login-card">
+        <div class="login-banner">
+          <div class="login-badge-tag">Sistem Administrasi &amp; Database</div>
+          <div class="brand-logo-wrap login-logo-box" id="loginLogoContainer">
+            <img
+              src="https://lh3.googleusercontent.com/a/ACg8ocKwa56EqjiXGTcTzJCjhlvHVD1_cjafyhnuBK5As9X9z1r7tS8J=s360-c-no"
+              alt="Logo KI - Bidang Tata Ruang dan Pertanahan"
+              onerror="handleLogoError(this, '42px')"
+            >
+          </div>
+          <h1 class="login-title">KI - Bidang Tata Ruang dan Pertanahan</h1>
+          <p class="login-subtitle">Aplikasi Pekerjaanku</p>
+        </div>
+
+        <div class="login-body">
+          <div id="loginAlertBox" class="login-alert hidden" role="alert">
+            <span id="loginAlertText"></span>
+          </div>
+
+          <form id="loginForm" novalidate>
+            <div class="form-group">
+              <label for="loginUsername" class="form-label">
+                <span>Username <span class="required-mark">*</span></span>
+              </label>
+              <div class="input-wrap">
+                <span class="input-icon-left">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <input
+                  type="text"
+                  id="loginUsername"
+                  class="form-control has-left-icon"
+                  placeholder="Masukkan username"
+                  autocomplete="username"
+                  required
+                >
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="loginPassword" class="form-label">
+                <span>Password <span class="required-mark">*</span></span>
+              </label>
+              <div class="input-wrap">
+                <span class="input-icon-left">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </span>
+                <input
+                  type="password"
+                  id="loginPassword"
+                  class="form-control has-left-icon has-right-btn"
+                  placeholder="Masukkan password"
+                  autocomplete="current-password"
+                  required
+                >
+                <button type="button" class="password-toggle-btn" data-target="loginPassword" aria-label="Tampilkan atau sembunyikan password">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <button type="submit" id="loginSubmitBtn" class="btn btn-primary btn-block" style="margin-top: 8px; padding: 12px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+              <span>Masuk ke Aplikasi</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <footer class="app-footer" style="border-radius: var(--radius-md); border: 1.5px solid var(--border-retro); max-width: 960px; margin: 0 auto; width: 100%;">
+      <div>Copyright &copy; <span class="auto-year"></span> - <strong>KI - Bidang Tata Ruang dan Pertanahan</strong> - Aplikasi Database Kerja Konsultan Individual</div>
+      <div>Powered By GoogleAppScript | Secured By Cloudflare | Design By <a href="https://gistariau.com/" target="_blank" rel="noopener noreferrer">GISTARIAU</a></div>
+      <div>Hak Cipta Di Lindungi Undang-undang Dibawah Naungan PT. GISTARIAU GEOSPASIAL SOLUTION</div>
+    </footer>
+  </section>
+
+  <!-- ==========================================
+       SHELL UTAMA APLIKASI (TERPROTEKSI LOGIN)
+       ========================================== -->
+  <div id="appShell" class="app-shell hidden">
+    <!-- Backdrop Sidebar Mobile -->
+    <div id="sidebarBackdrop" class="sidebar-backdrop"></div>
+
+    <!-- Sidebar Navigasi -->
+    <aside id="appSidebar" class="sidebar" aria-label="Menu Navigasi Utama">
+      <div class="sidebar-header">
+        <div class="brand-logo-wrap sidebar-logo">
+          <img
+            src="https://lh3.googleusercontent.com/a/ACg8ocKwa56EqjiXGTcTzJCjhlvHVD1_cjafyhnuBK5As9X9z1r7tS8J=s360-c-no"
+            alt="Logo Aplikasi Pekerjaanku"
+            onerror="handleLogoError(this, '24px')"
+          >
+        </div>
+        <div class="sidebar-brand-text">
+          <h1>KI - Tata Ruang &amp; Pertanahan</h1>
+          <span>Aplikasi Pekerjaanku</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">Menu Utama</div>
+
+        <button type="button" class="nav-item active" data-view="dashboard">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+          <span>Dashboard</span>
+        </button>
+
+        <button type="button" class="nav-item" data-view="input">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          <span>Input Data</span>
+        </button>
+
+        <button type="button" class="nav-item" data-view="data">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+          <span>Data Pekerjaan</span>
+        </button>
+
+        <button type="button" class="nav-item" data-view="ekspor">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Ekspor Data</span>
+        </button>
+
+        <div class="nav-section-label" style="margin-top: 8px;">Sistem</div>
+
+        <button type="button" class="nav-item" data-view="admin">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <span>Admin</span>
+        </button>
+
+        <button type="button" id="logoutMenuBtn" class="nav-item logout-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span>Logout</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer-info">
+        Zona Waktu: <strong>Asia/Jakarta (WIB)</strong><br>
+        Status DB: <span id="dbStatusText">Terhubung</span>
+      </div>
+    </aside>
+
+    <!-- Konten Utama -->
+    <div class="main-area">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button type="button" id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Buka Menu Navigasi">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="page-heading-group">
+            <h2 id="topbarTitle">Dashboard Pekerjaan</h2>
+            <p id="topbarSubtitle">Ringkasan statistik dan pemantauan kinerja Konsultan Individual</p>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="wib-clock-badge" title="Waktu Indonesia Barat (Asia/Jakarta)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span id="wibClockText">--/--/---- --:-- WIB</span>
+          </div>
+          <button type="button" id="syncDataBtn" class="btn btn-secondary btn-sm" title="Muat Ulang Data dari Google Spreadsheet">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            <span>Sinkronkan</span>
+          </button>
+          <div class="user-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span id="activeUsernameDisplay">admin</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="content-container">
+        <!-- Banner Peringatan Password Default -->
+        <div id="defaultPassNotice" class="login-alert info hidden" style="margin-bottom: 20px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="flex-shrink:0; margin-top:2px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <div>
+            <strong>Keamanan Akun:</strong> Anda masih menggunakan password bawaan (<code>admin123</code>). Demi keamanan database pekerjaan Anda, silakan segera ubah password pada menu <strong>Admin</strong> sebelum menggunakan menu lainnya.
+          </div>
+        </div>
+
+        <!-- ====================================
+             VIEW A: DASHBOARD
+             ==================================== -->
+        <section id="view-dashboard" class="app-view">
+          <!-- 4 Kartu Statistik Utama -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-top">
+                <span class="stat-label">Total Seluruh Pekerjaan</span>
+                <div class="stat-icon-box">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                </div>
+              </div>
+              <div class="stat-value" id="statTotalAll">0</div>
+              <div class="stat-sub">Akumulasi seluruh catatan database</div>
+            </div>
+
+            <div class="stat-card terracotta">
+              <div class="stat-top">
+                <span class="stat-label">Pekerjaan Bulan Berjalan</span>
+                <div class="stat-icon-box">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                </div>
+              </div>
+              <div class="stat-value" id="statTotalMonth">0</div>
+              <div class="stat-sub" id="statMonthLabel">Bulan ini (WIB)</div>
+            </div>
+
+            <div class="stat-card gold">
+              <div class="stat-top">
+                <span class="stat-label">Pekerjaan Tahun Berjalan</span>
+                <div class="stat-icon-box">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                </div>
+              </div>
+              <div class="stat-value" id="statTotalYear">0</div>
+              <div class="stat-sub" id="statYearLabel">Tahun ini (WIB)</div>
+            </div>
+
+            <div class="stat-card brown">
+              <div class="stat-top">
+                <span class="stat-label">Jenis Pekerjaan Terdaftar</span>
+                <div class="stat-icon-box">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                </div>
+              </div>
+              <div class="stat-value" id="statTotalJenis">0</div>
+              <div class="stat-sub">Kategori pekerjaan aktif</div>
+            </div>
+          </div>
+
+          <!-- Statistik Bulanan (Januari - Desember) -->
+          <div class="retro-card">
+            <div class="retro-card-header">
+              <h3 class="retro-card-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                <span>Statistik Bulanan Berdasarkan Jenis Pekerjaan (Januari – Desember)</span>
+              </h3>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <label for="dashMonthlyYearSelect" style="font-size: 0.84rem; font-weight: 700;">Tahun:</label>
+                <select id="dashMonthlyYearSelect" class="form-control" style="width: auto; padding: 6px 12px;"></select>
+              </div>
+            </div>
+
+            <div id="monthlyChartWrapper" class="chart-canvas-box">
+              <canvas id="monthlyChartCanvas"></canvas>
+            </div>
+            <div id="monthlyChartEmpty" class="empty-state hidden">
+              <div class="empty-state-icon">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              </div>
+              <h4>Belum Ada Data Pekerjaan pada Tahun Terpilih</h4>
+              <p>Grafik bulanan Januari hingga Desember akan tampil secara otomatis setelah Anda menambahkan catatan pekerjaan.</p>
+              <button type="button" class="btn btn-primary btn-sm" onclick="switchView('input')">+ Tambah Pekerjaan Pertama</button>
+            </div>
+
+            <!-- Ringkasan Total Pekerjaan per Bulan -->
+            <div id="monthlySummaryStrip" class="monthly-summary-strip" aria-label="Ringkasan total pekerjaan per bulan"></div>
+          </div>
+
+          <!-- Grid Statistik Tahunan & Komposisi Jenis Pekerjaan -->
+          <div class="charts-two-col">
+            <!-- Statistik Tahunan -->
+            <div class="retro-card">
+              <div class="retro-card-header">
+                <h3 class="retro-card-title">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  <span>Statistik Tahunan per Jenis Pekerjaan</span>
+                </h3>
+                <select id="dashYearlyFilterSelect" class="form-control" style="width: auto; padding: 6px 12px;" aria-label="Filter tahun statistik tahunan">
+                  <option value="ALL">Semua Tahun</option>
+                </select>
+              </div>
+              <div id="yearlyChartWrapper" class="chart-canvas-box">
+                <canvas id="yearlyChartCanvas"></canvas>
+              </div>
+              <div id="yearlyChartEmpty" class="empty-state hidden">
+                <div class="empty-state-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                </div>
+                <h4>Belum Ada Data Tahunan</h4>
+                <p>Data perbandingan antar tahun akan muncul otomatis seiring bertambahnya rekaman pekerjaan.</p>
+              </div>
+            </div>
+
+            <!-- Statistik Berdasarkan Jenis Pekerjaan -->
+            <div class="retro-card">
+              <div class="retro-card-header">
+                <h3 class="retro-card-title">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+                  <span>Proporsi Jenis Pekerjaan</span>
+                </h3>
+                <select id="dashCategoryYearSelect" class="form-control" style="width: auto; padding: 6px 12px;" aria-label="Filter tahun proporsi jenis pekerjaan">
+                  <option value="ALL">Semua Tahun</option>
+                </select>
+              </div>
+              <div id="categoryChartWrapper" class="chart-canvas-box">
+                <canvas id="categoryChartCanvas"></canvas>
+              </div>
+              <div id="categoryChartEmpty" class="empty-state hidden">
+                <div class="empty-state-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+                </div>
+                <h4>Belum Ada Distribusi Kategori</h4>
+                <p>Grafik distribusi berdasarkan jenis pekerjaan akan muncul ketika data tersedia.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================
+             VIEW B: INPUT DATA PEKERJAAN
+             ==================================== -->
+        <section id="view-input" class="app-view hidden">
+          <div class="retro-card" style="max-width: 820px; margin: 0 auto 24px;">
+            <div class="retro-card-header">
+              <h3 class="retro-card-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                <span>Formulir Input Data Pekerjaan Baru</span>
+              </h3>
+              <span class="jenis-badge" style="font-family: var(--font-mono);">ID Otomatis &amp; Terenkripsi</span>
+            </div>
+
+            <form id="inputPekerjaanForm" novalidate>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+                <!-- 1. Nomor Otomatis -->
+                <div class="form-group">
+                  <label for="inputAutoNo" class="form-label">
+                    <span>1. Nomor Urut Otomatis</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="inputAutoNo"
+                    class="form-control"
+                    style="font-family: var(--font-mono); font-weight: 700;"
+                    value="1"
+                    readonly
+                  >
+                  <div class="form-hint">Nomor urut dinamis dimulai dari 1. Sistem menyimpan ID unik permanen di database.</div>
+                </div>
+
+                <!-- 2. Tanggal Pekerjaan -->
+                <div class="form-group">
+                  <label for="inputTanggal" class="form-label">
+                    <span>2. Tanggal Pekerjaan <span class="required-mark">*</span></span>
+                    <span id="inputTanggalPreview" style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--green-deep);">DD/MM/YYYY</span>
+                  </label>
+                  <input
+                    type="date"
+                    id="inputTanggal"
+                    class="form-control"
+                    required
+                  >
+                  <div class="form-hint">Format tampilan DD/MM/YYYY (Zona waktu Asia/Jakarta).</div>
+                </div>
+              </div>
+
+              <!-- 3. Jenis Pekerjaan + Tambah Jenis Baru -->
+              <div class="form-group">
+                <label for="inputJenisPekerjaan" class="form-label">
+                  <span>3. Jenis Pekerjaan <span class="required-mark">*</span></span>
+                </label>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                  <select id="inputJenisPekerjaan" class="form-control" style="flex: 1; min-width: 240px;" required>
+                    <option value="">-- Pilih Jenis Pekerjaan --</option>
+                  </select>
+                  <button type="button" id="toggleAddJenisBtn" class="btn btn-secondary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    <span>Tambah Jenis Pekerjaan</span>
+                  </button>
+                </div>
+
+                <!-- Panel Tambah Jenis Pekerjaan Manual -->
+                <div id="addJenisInlineBox" class="hidden" style="margin-top: 12px; padding: 14px; background: var(--bg-cream); border: 1.5px solid var(--brass-gold); border-radius: var(--radius-sm);">
+                  <label for="newJenisInput" class="form-label" style="font-size: 0.82rem;">
+                    <span>Nama Jenis Pekerjaan Baru (Tersimpan Permanen di Spreadsheet)</span>
+                  </label>
+                  <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <input
+                      type="text"
+                      id="newJenisInput"
+                      class="form-control"
+                      style="flex: 1; min-width: 220px;"
+                      placeholder="Contoh: Penyusunan Materi Teknis RDTR"
+                      maxlength="100"
+                    >
+                    <button type="button" id="saveNewJenisBtn" class="btn btn-accent btn-sm">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg>
+                      <span>Simpan Jenis</span>
+                    </button>
+                    <button type="button" id="cancelNewJenisBtn" class="btn btn-secondary btn-sm">Batal</button>
+                  </div>
+                  <div class="form-hint">Sistem otomatis mencegah duplikasi nama jenis pekerjaan (termasuk perbedaan huruf besar/kecil).</div>
+                </div>
+              </div>
+
+              <!-- 4. Uraian Pekerjaan -->
+              <div class="form-group">
+                <label for="inputUraianPekerjaan" class="form-label">
+                  <span>4. Pekerjaan / Uraian Progress <span class="required-mark">*</span></span>
+                  <span id="inputCharCount" style="font-family: var(--font-mono); font-size: 0.76rem; color: var(--brown-muted);">0 karakter</span>
+                </label>
+                <textarea
+                  id="inputUraianPekerjaan"
+                  class="form-control"
+                  rows="5"
+                  placeholder="Tuliskan uraian lengkap atau progress pekerjaan yang dilaksanakan..."
+                  required
+                ></textarea>
+                <div class="form-hint">Mendukung teks panjang dan baris baru (Enter). Wajib diisi sebelum menyimpan.</div>
+              </div>
+
+              <!-- 5. Tombol Aksi Formulir -->
+              <div style="display: flex; gap: 10px; flex-wrap: wrap; padding-top: 8px; border-top: 1.5px dashed var(--border-retro);">
+                <button type="submit" id="savePekerjaanBtn" class="btn btn-primary">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                  <span>Simpan Data</span>
+                </button>
+                <button type="button" id="resetInputFormBtn" class="btn btn-secondary">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                  <span>Reset Formulir</span>
+                </button>
+                <button type="button" id="cancelInputFormBtn" class="btn btn-secondary">
+                  <span>Batal</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- ====================================
+             VIEW C: DATA PEKERJAAN
+             ==================================== -->
+        <section id="view-data" class="app-view hidden">
+          <!-- Panel Pencarian & Filter -->
+          <div class="retro-card">
+            <div class="retro-card-header">
+              <h3 class="retro-card-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+                <span>Pencarian &amp; Filter Database Pekerjaan</span>
+              </h3>
+              <button type="button" id="resetFilterBtn" class="btn btn-secondary btn-sm">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                <span>Reset Filter</span>
+              </button>
+            </div>
+
+            <div class="filter-grid">
+              <div>
+                <label for="filterJenisSelect" class="form-label">Jenis Pekerjaan</label>
+                <select id="filterJenisSelect" class="form-control">
+                  <option value="">Semua Jenis Pekerjaan</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="filterBulanSelect" class="form-label">Bulan</label>
+                <select id="filterBulanSelect" class="form-control">
+                  <option value="">Semua Bulan</option>
+                  <option value="01">Januari</option>
+                  <option value="02">Februari</option>
+                  <option value="03">Maret</option>
+                  <option value="04">April</option>
+                  <option value="05">Mei</option>
+                  <option value="06">Juni</option>
+                  <option value="07">Juli</option>
+                  <option value="08">Agustus</option>
+                  <option value="09">September</option>
+                  <option value="10">Oktober</option>
+                  <option value="11">November</option>
+                  <option value="12">Desember</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="filterTahunSelect" class="form-label">Tahun</label>
+                <select id="filterTahunSelect" class="form-control">
+                  <option value="">Semua Tahun</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="filterStartDate" class="form-label">Tanggal Awal</label>
+                <input type="date" id="filterStartDate" class="form-control">
+              </div>
+
+              <div>
+                <label for="filterEndDate" class="form-label">Tanggal Akhir</label>
+                <input type="date" id="filterEndDate" class="form-control">
+              </div>
+
+              <div>
+                <label for="filterKeywordInput" class="form-label">Kata Kunci Uraian</label>
+                <input type="text" id="filterKeywordInput" class="form-control" placeholder="Cari uraian pekerjaan...">
+              </div>
+            </div>
+          </div>
+
+          <!-- Tabel Database Pekerjaan -->
+          <div class="retro-card">
+            <div class="retro-card-header">
+              <h3 class="retro-card-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                <span>Daftar Pekerjaan Tersimpan</span>
+              </h3>
+              <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                <label for="pageSizeSelect" style="font-size: 0.82rem; font-weight: 700;">Baris:</label>
+                <select id="pageSizeSelect" class="form-control" style="width: auto; padding: 5px 10px;">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+                <button type="button" class="btn btn-primary btn-sm" onclick="switchView('input')">+ Input Baru</button>
+              </div>
+            </div>
+
+            <div id="dataTableContainer" class="table-responsive-wrap">
+              <table class="retro-table" aria-label="Tabel Data Pekerjaan">
+                <thead>
+                  <tr>
+                    <th class="col-no">No</th>
+                    <th class="col-date">Tanggal</th>
+                    <th class="col-jenis">Jenis Pekerjaan</th>
+                    <th>Pekerjaan</th>
+                    <th class="col-aksi">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="pekerjaanTableBody"></tbody>
+              </table>
+            </div>
+
+            <div id="dataTableEmpty" class="empty-state hidden">
+              <div class="empty-state-icon">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              </div>
+              <h4>Tidak Ada Data Pekerjaan Ditemukan</h4>
+              <p>Belum ada data yang sesuai dengan kriteria pencarian/filter Anda atau database masih kosong.</p>
+              <button type="button" class="btn btn-primary btn-sm" onclick="switchView('input')">+ Tambah Data Pekerjaan</button>
+            </div>
+
+            <div id="tablePaginationFooter" class="table-footer-bar">
+              <div id="paginationInfoText" class="pagination-info">Menampilkan 0 dari 0 data</div>
+              <div id="paginationButtons" class="pagination-controls"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================
+             VIEW D: EKSPOR DATA
+             ==================================== -->
+        <section id="view-ekspor" class="app-view hidden">
+          <div class="export-grid">
+            <!-- 1. Ekspor Bulanan -->
+            <div class="retro-card">
+              <div class="retro-card-header">
+                <h3 class="retro-card-title">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  <span>1. Ekspor Data Bulanan (CSV)</span>
+                </h3>
+              </div>
+              <p style="font-size: 0.88rem; color: var(--brown-muted); margin-bottom: 16px;">
+                Unduh seluruh rekaman pekerjaan pada bulan dan tahun tertentu dalam format CSV (UTF-8 BOM) yang siap dibuka di Microsoft Excel.
+              </p>
+
+              <div class="form-group">
+                <label for="exportMonthYearSelect" class="form-label">Pilih Tahun</label>
+                <select id="exportMonthYearSelect" class="form-control"></select>
+              </div>
+
+              <div class="form-group">
+                <label for="exportMonthSelect" class="form-label">Pilih Bulan</label>
+                <select id="exportMonthSelect" class="form-control">
+                  <option value="01">Januari</option>
+                  <option value="02">Februari</option>
+                  <option value="03">Maret</option>
+                  <option value="04">April</option>
+                  <option value="05">Mei</option>
+                  <option value="06">Juni</option>
+                  <option value="07">Juli</option>
+                  <option value="08">Agustus</option>
+                  <option value="09">September</option>
+                  <option value="10">Oktober</option>
+                  <option value="11">November</option>
+                  <option value="12">Desember</option>
+                </select>
+              </div>
+
+              <div class="export-preview-box">
+                <span>Jumlah data periode ini:</span>
+                <strong id="exportMonthlyCountBadge" style="font-family: var(--font-mono); color: var(--green-deep);">0 data</strong>
+              </div>
+
+              <button type="button" id="btnExportMonthly" class="btn btn-primary btn-block">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Unduh CSV Bulanan</span>
+              </button>
+            </div>
+
+            <!-- 2. Ekspor Tahunan -->
+            <div class="retro-card">
+              <div class="retro-card-header">
+                <h3 class="retro-card-title">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                  <span>2. Ekspor Data Tahunan (CSV)</span>
+                </h3>
+              </div>
+              <p style="font-size: 0.88rem; color: var(--brown-muted); margin-bottom: 16px;">
+                Unduh seluruh rekapitulasi pekerjaan selama satu tahun penuh dalam satu file CSV terstruktur lengkap dengan pengamanan formula injection.
+              </p>
+
+              <div class="form-group">
+                <label for="exportAnnualYearSelect" class="form-label">Pilih Tahun</label>
+                <select id="exportAnnualYearSelect" class="form-control"></select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Nama File Otomatis</label>
+                <input type="text" id="exportAnnualFilenamePreview" class="form-control" style="font-family: var(--font-mono); font-size: 0.84rem;" readonly>
+              </div>
+
+              <div class="export-preview-box">
+                <span>Jumlah data tahun terpilih:</span>
+                <strong id="exportAnnualCountBadge" style="font-family: var(--font-mono); color: var(--terracotta);">0 data</strong>
+              </div>
+
+              <button type="button" id="btnExportAnnual" class="btn btn-accent btn-block">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Unduh CSV Tahunan</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================
+             VIEW E: PENGATURAN ADMIN
+             ==================================== -->
+        <section id="view-admin" class="app-view hidden">
+          <div class="retro-card" style="max-width: 640px; margin: 0 auto 24px;">
+            <div class="retro-card-header">
+              <h3 class="retro-card-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <span>Pengaturan Keamanan Akun Administrator</span>
+              </h3>
+              <span class="jenis-badge">SHA-256 + Salt</span>
+            </div>
+
+            <p style="font-size: 0.88rem; color: var(--brown-muted); margin-bottom: 18px;">
+              Ubah username dan password administrator aplikasi. Kredensial disimpan dalam bentuk hash terenkripsi di Google Apps Script Properties. Setelah perubahan berhasil, Anda akan diminta login ulang demi keamanan sesi.
+            </p>
+
+            <form id="adminCredentialsForm" novalidate>
+              <div class="form-group">
+                <label for="adminNewUsername" class="form-label">
+                  <span>Username Baru <span class="required-mark">*</span></span>
+                </label>
+                <input
+                  type="text"
+                  id="adminNewUsername"
+                  class="form-control"
+                  placeholder="Masukkan username baru (minimal 3 karakter)"
+                  minlength="3"
+                  required
+                >
+              </div>
+
+              <div class="form-group">
+                <label for="adminCurrentPassword" class="form-label">
+                  <span>Password Lama (Verifikasi) <span class="required-mark">*</span></span>
+                </label>
+                <div class="input-wrap">
+                  <input
+                    type="password"
+                    id="adminCurrentPassword"
+                    class="form-control has-right-btn"
+                    placeholder="Masukkan password saat ini"
+                    required
+                  >
+                  <button type="button" class="password-toggle-btn" data-target="adminCurrentPassword" aria-label="Tampilkan password lama">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="adminNewPassword" class="form-label">
+                  <span>Password Baru <span class="required-mark">*</span></span>
+                </label>
+                <div class="input-wrap">
+                  <input
+                    type="password"
+                    id="adminNewPassword"
+                    class="form-control has-right-btn"
+                    placeholder="Minimal 6 karakter (jangan gunakan admin123)"
+                    minlength="6"
+                    required
+                  >
+                  <button type="button" class="password-toggle-btn" data-target="adminNewPassword" aria-label="Tampilkan password baru">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="adminConfirmPassword" class="form-label">
+                  <span>Konfirmasi Password Baru <span class="required-mark">*</span></span>
+                </label>
+                <div class="input-wrap">
+                  <input
+                    type="password"
+                    id="adminConfirmPassword"
+                    class="form-control has-right-btn"
+                    placeholder="Ulangi password baru"
+                    minlength="6"
+                    required
+                  >
+                  <button type="button" class="password-toggle-btn" data-target="adminConfirmPassword" aria-label="Tampilkan konfirmasi password">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 10px; flex-wrap: wrap; padding-top: 8px; border-top: 1.5px dashed var(--border-retro);">
+                <button type="submit" id="saveAdminBtn" class="btn btn-primary">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                  <span>Simpan Perubahan Akun</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+      </main>
+
+      <!-- Footer Wajib Aplikasi -->
+      <footer class="app-footer">
+        <div>Copyright &copy; <span class="auto-year"></span> - <strong>KI - Bidang Tata Ruang dan Pertanahan</strong> - Aplikasi Database Kerja Konsultan Individual</div>
+        <div>Powered By GoogleAppScript | Secured By Cloudflare | Design By <a href="https://gistariau.com/" target="_blank" rel="noopener noreferrer">GISTARIAU</a></div>
+        <div>Hak Cipta Di Lindungi Undang-undang Dibawah Naungan PT. GISTARIAU GEOSPASIAL SOLUTION</div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MODAL EDIT DATA PEKERJAAN
+       ========================================== -->
+  <div id="editModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="editModalTitle">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          <span>Edit Data Pekerjaan</span>
+        </h3>
+        <button type="button" class="modal-close-btn" onclick="closeEditModal()" aria-label="Tutup Modal Edit">&times;</button>
+      </div>
+      <form id="editPekerjaanForm" novalidate>
+        <div class="modal-body">
+          <input type="hidden" id="editPekerjaanId">
+
+          <div class="form-group">
+            <label for="editTanggal" class="form-label">
+              <span>Tanggal Pekerjaan <span class="required-mark">*</span></span>
+              <span id="editTanggalPreview" style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--green-deep);">DD/MM/YYYY</span>
+            </label>
+            <input type="date" id="editTanggal" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label for="editJenisPekerjaan" class="form-label">
+              <span>Jenis Pekerjaan <span class="required-mark">*</span></span>
+            </label>
+            <select id="editJenisPekerjaan" class="form-control" required></select>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0;">
+            <label for="editUraianPekerjaan" class="form-label">
+              <span>Pekerjaan / Uraian <span class="required-mark">*</span></span>
+            </label>
+            <textarea id="editUraianPekerjaan" class="form-control" rows="5" required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Batal</button>
+          <button type="submit" id="updatePekerjaanBtn" class="btn btn-primary">
+            <span>Simpan Perubahan</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MODAL KONFIRMASI HAPUS DATA
+       ========================================== -->
+  <div id="deleteModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle">
+    <div class="modal-box sm">
+      <div class="modal-header danger">
+        <h3 id="deleteModalTitle">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          <span>Konfirmasi Penghapusan</span>
+        </h3>
+        <button type="button" class="modal-close-btn" onclick="closeDeleteModal()" aria-label="Tutup Konfirmasi Hapus">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="deleteTargetId">
+        <p style="font-weight: 600; margin-bottom: 10px;">Apakah Anda yakin ingin menghapus data pekerjaan berikut secara permanen dari Google Spreadsheet?</p>
+        <div id="deleteItemSummary" style="background: var(--bg-cream); border: 1px solid var(--border-retro); border-radius: var(--radius-sm); padding: 12px; font-size: 0.85rem;"></div>
+        <p style="font-size: 0.8rem; color: var(--danger); margin-top: 10px; font-weight: 600;">
+          Tindakan ini tidak dapat dibatalkan. Nomor urut tabel akan menyesuaikan secara otomatis.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeDeleteModal()">Batal</button>
+        <button type="button" id="confirmDeleteBtn" class="btn btn-danger">
+          <span>Ya, Hapus Data</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       JAVASCRIPT LOGIKA FRONTEND LENGKAP
+       ========================================== -->
+  <script>
+    'use strict';
+
+    // Endpoint satu domain Cloudflare Pages Functions
+    const API_ENDPOINT = '/api';
+    const SESSION_KEY = 'ki_tata_ruang_session_v1';
+
+    const NAMA_BULAN = [
+      'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+      'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+    ];
+
+    const RETRO_CHART_PALETTE = [
+      '#1E463A', // Hijau Tua Kartografi
+      '#C66837', // Terracotta
+      '#C28F38', // Emas Kuningan
+      '#3B6E8C', // Biru Batu Tulis
+      '#6E473B', // Cokelat Espresso
+      '#4E8068', // Hijau Sage
+      '#B84A44', // Merah Bata
+      '#8C7A3E', // Zaitun Retro
+      '#2E5A6B', // Teal Gelap
+      '#A86C4A'  // Tanah Liat
+    ];
+
+    // State Global Aplikasi
+    const AppState = {
+      session: null,
+      pekerjaanList: [],
+      jenisList: [],
+      filteredList: [],
+      currentPage: 1,
+      pageSize: 10,
+      activeView: 'dashboard',
+      charts: {
+        monthly: null,
+        yearly: null,
+        category: null
+      },
+      isSubmitting: false
+    };
+
+    /* ==========================================
+       UTILITAS ZONA WAKTU ASIA/JAKARTA (WIB)
+       ========================================== */
+    function getJakartaTodayISO() {
+      const formatter = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'Asia/Jakarta',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+      });
+      return formatter.format(new Date()); // YYYY-MM-DD
+    }
+
+    function getJakartaParts() {
+      const iso = getJakartaTodayISO();
+      const [year, month, day] = iso.split('-');
+      return { iso, year, month, day };
+    }
+
+    function formatISOToDDMMYYYY(isoDate) {
+      if (!isoDate || typeof isoDate !== 'string') return '-';
+      const clean = isoDate.trim().slice(0, 10);
+      const parts = clean.split('-');
+      if (parts.length !== 3) return clean;
+      return `${parts[2]}/${parts[1]}/${parts[0]}`;
+    }
+
+    function updateWibClock() {
+      const now = new Date();
+      const dateStr = new Intl.DateTimeFormat('id-ID', {
+        timeZone: 'Asia/Jakarta',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      }).format(now);
+      const timeStr = new Intl.DateTimeFormat('id-ID', {
+        timeZone: 'Asia/Jakarta',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      }).format(now).replace(/\./g, ':');
+
+      const el = document.getElementById('wibClockText');
+      if (el) el.textContent = `${dateStr} • ${timeStr} WIB`;
+
+      const currentYear = getJakartaParts().year;
+      document.querySelectorAll('.auto-year').forEach(span => {
+        span.textContent = currentYear;
+      });
+    }
+
+    /* ==========================================
+       FALLBACK LOGO & NOTIFIKASI TOAST
+       ========================================== */
+    function handleLogoError(imgEl, fontSize) {
+      const parent = imgEl.parentElement;
+      if (!parent) return;
+      imgEl.remove();
+      const fallback = document.createElement('div');
+      fallback.className = 'brand-logo-fallback';
+      fallback.style.fontSize = fontSize || '24px';
+      fallback.textContent = 'KI';
+      fallback.title = 'KI - Bidang Tata Ruang dan Pertanahan';
+      parent.appendChild(fallback);
+    }
+
+    function showToast(message, type = 'success', duration = 4200) {
+      const container = document.getElementById('toastContainer');
+      if (!container) return;
+
+      const toast = document.createElement('div');
+      toast.className = `toast-item ${type}`;
+
+      const iconSvg = type === 'error'
+        ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B83832" stroke-width="2.4"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>'
+        : type === 'warning'
+        ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C28F38" stroke-width="2.4"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
+        : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#25684A" stroke-width="2.4"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
+
+      const iconWrap = document.createElement('span');
+      iconWrap.style.marginTop = '1px';
+      iconWrap.innerHTML = iconSvg;
+
+      const content = document.createElement('div');
+      content.className = 'toast-content';
+      content.textContent = message;
+
+      toast.appendChild(iconWrap);
+      toast.appendChild(content);
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(-6px)';
+        toast.style.transition = 'all 0.2s ease';
+        setTimeout(() => toast.remove(), 220);
+      }, duration);
+    }
+
+    /* ==========================================
+       MANAJEMEN SESI (SESSIONSTORAGE) & API CLIENT
+       ========================================== */
+    function saveSession(sessionObj) {
+      AppState.session = sessionObj;
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessionObj));
+    }
+
+    function loadSession() {
+      try {
+        const raw = sessionStorage.getItem(SESSION_KEY);
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        if (!parsed || !parsed.token || !parsed.expiresAt) {
+          clearSession();
+          return null;
+        }
+        if (Date.now() >= Number(parsed.expiresAt)) {
+          clearSession();
+          return null;
+        }
+        AppState.session = parsed;
+        return parsed;
+      } catch (e) {
+        clearSession();
+        return null;
+      }
+    }
+
+    function clearSession() {
+      AppState.session = null;
+      sessionStorage.removeItem(SESSION_KEY);
+    }
+
+    function forceLogoutToLogin(reasonMessage = '') {
+      clearSession();
+      AppState.pekerjaanList = [];
+      AppState.jenisList = [];
+      document.getElementById('appShell').classList.add('hidden');
+      document.getElementById('loginView').classList.remove('hidden');
+      document.getElementById('loginPassword').value = '';
+
+      const alertBox = document.getElementById('loginAlertBox');
+      const alertText = document.getElementById('loginAlertText');
+      if (reasonMessage) {
+        alertText.textContent = reasonMessage;
+        alertBox.classList.remove('hidden');
+      } else {
+        alertBox.classList.add('hidden');
+      }
+    }
+
+    async function callApi(action, payload = {}, requireAuth = true) {
+      let token = null;
+      if (requireAuth) {
+        const currentSession = loadSession();
+        if (!currentSession) {
+          forceLogoutToLogin('Sesi Anda telah kedaluwarsa. Silakan login kembali.');
+          throw new Error('Sesi telah kedaluwarsa.');
+        }
+        token = currentSession.token;
+      }
+
+      let response;
+      try {
+        response = await fetch(API_ENDPOINT, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            action,
+            token,
+            payload
+          })
+        });
+      } catch (networkErr) {
+        throw new Error('Gagal terhubung ke server Cloudflare/Database. Periksa koneksi internet Anda.');
+      }
+
+      let result;
+      try {
+        result = await response.json();
+      } catch (parseErr) {
+        throw new Error('Respons server tidak valid. Pastikan konfigurasi Cloudflare Pages & Google Apps Script sudah benar.');
+      }
+
+      if (response.status === 401 || (result && result.code === 'SESSION_EXPIRED')) {
+        forceLogoutToLogin(result.message || 'Sesi Anda telah berakhir. Silakan login kembali.');
+        throw new Error(result.message || 'Sesi tidak valid.');
+      }
+
+      if (!result || result.success !== true) {
+        throw new Error((result && result.message) || 'Terjadi kesalahan saat memproses permintaan.');
+      }
+
+      return result;
+    }
+
+    /* ==========================================
+       AUTENTIKASI & LOGIN
+       ========================================== */
+    function setupPasswordToggles() {
+      document.querySelectorAll('.password-toggle-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.getAttribute('data-target');
+          const input = document.getElementById(targetId);
+          if (!input) return;
+          const isPwd = input.type === 'password';
+          input.type = isPwd ? 'text' : 'password';
+          btn.innerHTML = isPwd
+            ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>'
+            : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+        });
+      });
+    }
+
+    async function handleLoginSubmit(e) {
+      e.preventDefault();
+      if (AppState.isSubmitting) return;
+
+      const username = document.getElementById('loginUsername').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      const alertBox = document.getElementById('loginAlertBox');
+      const alertText = document.getElementById('loginAlertText');
+      const btn = document.getElementById('loginSubmitBtn');
+
+      alertBox.classList.add('hidden');
+
+      if (!username || !password) {
+        alertText.textContent = 'Username dan password wajib diisi.';
+        alertBox.classList.remove('hidden');
+        return;
+      }
+
+      AppState.isSubmitting = true;
+      const originalHtml = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span><span>Memverifikasi Akun...</span>';
+
+      try {
+        const res = await callApi('login', { username, password }, false);
+        saveSession(res.data);
+        document.getElementById('loginPassword').value = '';
+        showToast(res.message || 'Login berhasil!', 'success');
+        await enterAuthenticatedApp();
+      } catch (err) {
+        alertText.textContent = err.message;
+        alertBox.classList.remove('hidden');
+      } finally {
+        AppState.isSubmitting = false;
+        btn.disabled = false;
+        btn.innerHTML = originalHtml;
+      }
+    }
+
+    async function handleLogout() {
+      const current = loadSession();
+      try {
+        if (current && current.token) {
+          await callApi('logout', {}, false);
+        }
+      } catch (e) {
+        // Abaikan error jaringan saat logout, tetap bersihkan sesi lokal
+      }
+      forceLogoutToLogin('');
+      showToast('Anda telah berhasil logout dari aplikasi.', 'success');
+    }
+
+    async function enterAuthenticatedApp() {
+      const session = loadSession();
+      if (!session) {
+        forceLogoutToLogin('');
+        return;
+      }
+
+      document.getElementById('loginView').classList.add('hidden');
+      document.getElementById('appShell').classList.remove('hidden');
+      document.getElementById('activeUsernameDisplay').textContent = session.username;
+      document.getElementById('adminNewUsername').value = session.username;
+
+      const defaultBanner = document.getElementById('defaultPassNotice');
+      if (session.mustChangePassword) {
+        defaultBanner.classList.remove('hidden');
+        switchView('admin');
+      } else {
+        defaultBanner.classList.add('hidden');
+        switchView('dashboard');
+      }
+
+      await syncAllDatabaseData(true);
+    }
+
+    /* ==========================================
+       NAVIGASI MENU & RESPONSIVE DRAWER
+       ========================================== */
+    const VIEW_META = {
+      dashboard: {
+        title: 'Dashboard Pekerjaan',
+        subtitle: 'Ringkasan statistik dan pemantauan kinerja Konsultan Individual'
+      },
+      input: {
+        title: 'Input Data Pekerjaan',
+        subtitle: 'Pencatatan aktivitas dan progress pekerjaan ke database Google Spreadsheet'
+      },
+      data: {
+        title: 'Data Pekerjaan',
+        subtitle: 'Pencarian, pemfilteran, pengeditan, dan pengelolaan rekaman pekerjaan'
+      },
+      ekspor: {
+        title: 'Ekspor Data Pekerjaan',
+        subtitle: 'Unduh laporan pekerjaan bulanan dan tahunan dalam format CSV kompatibel Excel'
+      },
+      admin: {
+        title: 'Pengaturan Admin',
+        subtitle: 'Manajemen kredensial login dan keamanan akses aplikasi'
+      }
+    };
+
+    function switchView(viewName) {
+      const session = loadSession();
+      if (!session) {
+        forceLogoutToLogin('Silakan login terlebih dahulu.');
+        return;
+      }
+
+      // Wajib ganti password default saat pertama kali login
+      if (session.mustChangePassword && viewName !== 'admin') {
+        showToast('Harap ganti password default terlebih dahulu pada menu Admin.', 'warning');
+        viewName = 'admin';
+      }
+
+      AppState.activeView = viewName;
+
+      document.querySelectorAll('.nav-item[data-view]').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-view') === viewName);
+      });
+
+      document.querySelectorAll('.app-view').forEach(sec => {
+        sec.classList.add('hidden');
+      });
+
+      const targetSec = document.getElementById(`view-${viewName}`);
+      if (targetSec) targetSec.classList.remove('hidden');
+
+      const meta = VIEW_META[viewName] || VIEW_META.dashboard;
+      document.getElementById('topbarTitle').textContent = meta.title;
+      document.getElementById('topbarSubtitle').textContent = meta.subtitle;
+
+      closeMobileSidebar();
+
+      if (viewName === 'dashboard') {
+        renderDashboard();
+      } else if (viewName === 'input') {
+        prepareInputFormDefaults();
+      } else if (viewName === 'data') {
+        applyDataFilters();
+      } else if (viewName === 'ekspor') {
+        updateExportPreviews();
+      }
+    }
+
+    function openMobileSidebar() {
+      document.getElementById('appSidebar').classList.add('open');
+      document.getElementById('sidebarBackdrop').classList.add('show');
+    }
+
+    function closeMobileSidebar() {
+      document.getElementById('appSidebar').classList.remove('open');
+      document.getElementById('sidebarBackdrop').classList.remove('show');
+    }
+
+    /* ==========================================
+       SINKRONISASI DATABASE GOOGLE SPREADSHEET
+       ========================================== */
+    async function syncAllDatabaseData(silent = false) {
+      const syncBtn = document.getElementById('syncDataBtn');
+      const statusEl = document.getElementById('dbStatusText');
+      if (syncBtn) syncBtn.disabled = true;
+      if (statusEl) statusEl.textContent = 'Menyinkronkan...';
+
+      try {
+        const res = await callApi('getBootstrapData', {}, true);
+        const data = res.data || {};
+        AppState.pekerjaanList = sortPekerjaanNewestFirst(Array.isArray(data.pekerjaan) ? data.pekerjaan : []);
+        AppState.jenisList = Array.isArray(data.jenisPekerjaan) ? data.jenisPekerjaan : [];
+
+        if (statusEl) statusEl.textContent = 'Terhubung';
+
+        populateAllDropdowns();
+        updateInputAutoNumber();
+        renderDashboard();
+        applyDataFilters();
+        updateExportPreviews();
+
+        if (!silent) {
+          showToast('Data berhasil disinkronkan dari Google Spreadsheet.', 'success');
+        }
+      } catch (err) {
+        if (statusEl) statusEl.textContent = 'Gangguan Koneksi';
+        showToast(err.message, 'error', 5000);
+      } finally {
+        if (syncBtn) syncBtn.disabled = false;
+      }
+    }
+
+    function sortPekerjaanNewestFirst(list) {
+      return [...list].sort((a, b) => {
+        const dateCmp = String(b.tanggal || '').localeCompare(String(a.tanggal || ''));
+        if (dateCmp !== 0) return dateCmp;
+        return String(b.dibuatPada || '').localeCompare(String(a.dibuatPada || ''));
+      });
+    }
+
+    function getAvailableYears() {
+      const currentYear = getJakartaParts().year;
+      const yearSet = new Set([currentYear]);
+      AppState.pekerjaanList.forEach(item => {
+        if (item.tanggal && item.tanggal.length >= 4) {
+          yearSet.add(item.tanggal.slice(0, 4));
+        }
+      });
+      return Array.from(yearSet).sort((a, b) => b.localeCompare(a));
+    }
+
+    function populateAllDropdowns() {
+      const activeJenis = AppState.jenisList.filter(j => (j.status || 'Aktif') === 'Aktif');
+
+      // 1. Dropdown Input Data
+      const inputSelect = document.getElementById('inputJenisPekerjaan');
+      const prevInputVal = inputSelect.value;
+      inputSelect.innerHTML = '<option value="">-- Pilih Jenis Pekerjaan --</option>';
+      activeJenis.forEach(j => {
+        const opt = document.createElement('option');
+        opt.value = j.namaJenis;
+        opt.textContent = j.namaJenis;
+        inputSelect.appendChild(opt);
+      });
+      if (prevInputVal) inputSelect.value = prevInputVal;
+
+      // 2. Dropdown Edit Modal
+      const editSelect = document.getElementById('editJenisPekerjaan');
+      const prevEditVal = editSelect.value;
+      editSelect.innerHTML = '';
+      activeJenis.forEach(j => {
+        const opt = document.createElement('option');
+        opt.value = j.namaJenis;
+        opt.textContent = j.namaJenis;
+        editSelect.appendChild(opt);
+      });
+      if (prevEditVal) editSelect.value = prevEditVal;
+
+      // 3. Dropdown Filter Data Pekerjaan
+      const filterSelect = document.getElementById('filterJenisSelect');
+      const prevFilterVal = filterSelect.value;
+      filterSelect.innerHTML = '<option value="">Semua Jenis Pekerjaan</option>';
+      activeJenis.forEach(j => {
+        const opt = document.createElement('option');
+        opt.value = j.namaJenis;
+        opt.textContent = j.namaJenis;
+        filterSelect.appendChild(opt);
+      });
+      filterSelect.value = prevFilterVal;
+
+      // 4. Dropdown Tahun (Dashboard, Filter, Ekspor)
+      const years = getAvailableYears();
+      const currentYear = getJakartaParts().year;
+
+      const dashMonthlyYear = document.getElementById('dashMonthlyYearSelect');
+      const prevDashMonthYear = dashMonthlyYear.value || currentYear;
+      dashMonthlyYear.innerHTML = '';
+      years.forEach(y => {
+        const opt = document.createElement('option');
+        opt.value = y;
+        opt.textContent = y;
+        dashMonthlyYear.appendChild(opt);
+      });
+      dashMonthlyYear.value = years.includes(prevDashMonthYear) ? prevDashMonthYear : currentYear;
+
+      const dashYearlyFilter = document.getElementById('dashYearlyFilterSelect');
+      const prevDashYearly = dashYearlyFilter.value || 'ALL';
+      dashYearlyFilter.innerHTML = '<option value="ALL">Semua Tahun</option>';
+      years.forEach(y => {
+        const opt = document.createElement('option');
+        opt.value = y;
+        opt.textContent = `Tahun ${y}`;
+        dashYearlyFilter.appendChild(opt);
+      });
+      dashYearlyFilter.value = prevDashYearly;
+
+      const dashCatYear = document.getElementById('dashCategoryYearSelect');
+      const prevDashCat = dashCatYear.value || 'ALL';
+      dashCatYear.innerHTML = '<option value="ALL">Semua Tahun</option>';
+      years.forEach(y => {
+        const opt = document.createElement('option');
+        opt.value = y;
+        opt.textContent = `Tahun ${y}`;
+        dashCatYear.appendChild(opt);
+      });
+      dashCatYear.value = prevDashCat;
+
+      const filterTahun = document.getElementById('filterTahunSelect');
+      const prevFilterTahun = filterTahun.value;
+      filterTahun.innerHTML = '<option value="">Semua Tahun</option>';
+      years.forEach(y => {
+        const opt = document.createElement('option');
+        opt.value = y;
+        opt.textContent = y;
+        filterTahun.appendChild(opt);
+      });
+      filterTahun.value = prevFilterTahun;
+
+      const expMonthYear = document.getElementById('exportMonthYearSelect');
+      const prevExpMonthYear = expMonthYear.value || currentYear;
+      expMonthYear.innerHTML = '';
+      years.forEach(y => {
+        const opt = document.createElement('option');
+        opt.value = y;
+        opt.textContent = y;
+        expMonthYear.appendChild(opt);
+      });
+      expMonthYear.value = years.includes(prevExpMonthYear) ? prevExpMonthYear : currentYear;
+
+      const expAnnualYear = document.getElementById('exportAnnualYearSelect');
+      const prevExpAnnualYear = expAnnualYear.value || currentYear;
+      expAnnualYear.innerHTML = '';
+      years.forEach(y => {
+        const opt = document.createElement('option');
+        opt.value = y;
+        opt.textContent = y;
+        expAnnualYear.appendChild(opt);
+      });
+      expAnnualYear.value = years.includes(prevExpAnnualYear) ? prevExpAnnualYear : currentYear;
+    }
+
+    /* ==========================================
+       A. LOGIKA DASHBOARD & GRAFIK INTERAKTIF
+       ========================================== */
+    function renderDashboard() {
+      const jakarta = getJakartaParts();
+      const currentYM = `${jakarta.year}-${jakarta.month}`;
+      const currentY = jakarta.year;
+
+      const totalAll = AppState.pekerjaanList.length;
+      const totalMonth = AppState.pekerjaanList.filter(p => String(p.tanggal || '').startsWith(currentYM)).length;
+      const totalYear = AppState.pekerjaanList.filter(p => String(p.tanggal || '').startsWith(currentY)).length;
+      const totalJenis = AppState.jenisList.filter(j => (j.status || 'Aktif') === 'Aktif').length;
+
+      document.getElementById('statTotalAll').textContent = totalAll;
+      document.getElementById('statTotalMonth').textContent = totalMonth;
+      document.getElementById('statMonthLabel').textContent = `${NAMA_BULAN[Number(jakarta.month) - 1]} ${currentY} (WIB)`;
+      document.getElementById('statTotalYear').textContent = totalYear;
+      document.getElementById('statYearLabel').textContent = `Tahun ${currentY} (WIB)`;
+      document.getElementById('statTotalJenis').textContent = totalJenis;
+
+      renderMonthlyChart();
+      renderYearlyChart();
+      renderCategoryChart();
+    }
+
+    function getAllCategoriesInOrder() {
+      const set = new Set();
+      AppState.jenisList.forEach(j => {
+        if (j.namaJenis) set.add(j.namaJenis);
+      });
+      AppState.pekerjaanList.forEach(p => {
+        if (p.jenisPekerjaan) set.add(p.jenisPekerjaan);
+      });
+      return Array.from(set);
+    }
+
+    function renderMonthlyChart() {
+      const selectedYear = document.getElementById('dashMonthlyYearSelect').value || getJakartaParts().year;
+      const yearItems = AppState.pekerjaanList.filter(p => String(p.tanggal || '').startsWith(selectedYear));
+
+      // Ringkasan total pekerjaan per bulan (Januari - Desember)
+      const monthlyTotals = new Array(12).fill(0);
+      yearItems.forEach(item => {
+        const mIdx = parseInt(String(item.tanggal).slice(5, 7), 10) - 1;
+        if (mIdx >= 0 && mIdx < 12) monthlyTotals[mIdx]++;
+      });
+
+      const stripEl = document.getElementById('monthlySummaryStrip');
+      stripEl.innerHTML = '';
+      NAMA_BULAN.forEach((nama, idx) => {
+        const pill = document.createElement('div');
+        pill.className = 'month-pill';
+        pill.innerHTML = `<span class="m-name">${nama.slice(0, 3).toUpperCase()}</span><span class="m-val">${monthlyTotals[idx]}</span>`;
+        stripEl.appendChild(pill);
+      });
+
+      const wrapper = document.getElementById('monthlyChartWrapper');
+      const emptyBox = document.getElementById('monthlyChartEmpty');
+
+      if (yearItems.length === 0) {
+        wrapper.classList.add('hidden');
+        emptyBox.classList.remove('hidden');
+        if (AppState.charts.monthly) {
+          AppState.charts.monthly.destroy();
+          AppState.charts.monthly = null;
+        }
+        return;
+      }
+
+      wrapper.classList.remove('hidden');
+      emptyBox.classList.add('hidden');
+
+      const categories = getAllCategoriesInOrder().filter(cat =>
+        yearItems.some(item => item.jenisPekerjaan === cat)
+      );
+
+      const datasets = categories.map((cat, idx) => {
+        const counts = new Array(12).fill(0);
+        yearItems.forEach(item => {
+          if (item.jenisPekerjaan === cat) {
+            const mIdx = parseInt(String(item.tanggal).slice(5, 7), 10) - 1;
+            if (mIdx >= 0 && mIdx < 12) counts[mIdx]++;
+          }
+        });
+        return {
+          label: cat,
+          data: counts,
+          backgroundColor: RETRO_CHART_PALETTE[idx % RETRO_CHART_PALETTE.length],
+          borderColor: '#362419',
+          borderWidth: 1,
+          borderRadius: 4
+        };
+      });
+
+      if (AppState.charts.monthly) {
+        AppState.charts.monthly.destroy();
+      }
+
+      if (typeof Chart === 'undefined') return;
+      const ctx = document.getElementById('monthlyChartCanvas').getContext('2d');
+      AppState.charts.monthly = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: NAMA_BULAN,
+          datasets
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: { color: '#362419', font: { family: "'Plus Jakarta Sans', sans-serif", weight: '600' } }
+            },
+            tooltip: {
+              backgroundColor: '#362419',
+              titleColor: '#FFFDF8',
+              bodyColor: '#FFFDF8'
+            }
+          },
+          scales: {
+            x: {
+              stacked: true,
+              grid: { display: false },
+              ticks: { color: '#362419', font: { weight: '600' } }
+            },
+            y: {
+              stacked: true,
+              beginAtZero: true,
+              ticks: { precision: 0, color: '#6C5A4C' },
+              grid: { color: 'rgba(207, 192, 168, 0.45)' }
+            }
+          }
+        }
+      });
+    }
+
+    function renderYearlyChart() {
+      const selectedFilterYear = document.getElementById('dashYearlyFilterSelect').value || 'ALL';
+      const sourceItems = selectedFilterYear === 'ALL'
+        ? AppState.pekerjaanList
+        : AppState.pekerjaanList.filter(p => String(p.tanggal || '').startsWith(selectedFilterYear));
+
+      const wrapper = document.getElementById('yearlyChartWrapper');
+      const emptyBox = document.getElementById('yearlyChartEmpty');
+
+      if (sourceItems.length === 0) {
+        wrapper.classList.add('hidden');
+        emptyBox.classList.remove('hidden');
+        if (AppState.charts.yearly) {
+          AppState.charts.yearly.destroy();
+          AppState.charts.yearly = null;
+        }
+        return;
+      }
+
+      wrapper.classList.remove('hidden');
+      emptyBox.classList.add('hidden');
+
+      const yearsAsc = Array.from(new Set(
+        sourceItems.map(p => String(p.tanggal || '').slice(0, 4)).filter(Boolean)
+      )).sort((a, b) => a.localeCompare(b));
+
+      const categories = getAllCategoriesInOrder().filter(cat =>
+        sourceItems.some(item => item.jenisPekerjaan === cat)
+      );
+
+      const datasets = categories.map((cat, idx) => ({
+        label: cat,
+        data: yearsAsc.map(yr =>
+          sourceItems.filter(p => String(p.tanggal || '').startsWith(yr) && p.jenisPekerjaan === cat).length
+        ),
+        backgroundColor: RETRO_CHART_PALETTE[idx % RETRO_CHART_PALETTE.length],
+        borderColor: '#362419',
+        borderWidth: 1,
+        borderRadius: 4
+      }));
+
+      if (AppState.charts.yearly) {
+        AppState.charts.yearly.destroy();
+      }
+
+      if (typeof Chart === 'undefined') return;
+      const ctx = document.getElementById('yearlyChartCanvas').getContext('2d');
+      AppState.charts.yearly = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: yearsAsc.map(y => `Tahun ${y}`),
+          datasets
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: { color: '#362419', font: { family: "'Plus Jakarta Sans', sans-serif", weight: '600' } }
+            },
+            tooltip: {
+              backgroundColor: '#362419'
+            }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { color: '#362419', font: { weight: '600' } }
+            },
+            y: {
+              beginAtZero: true,
+              ticks: { precision: 0, color: '#6C5A4C' },
+              grid: { color: 'rgba(207, 192, 168, 0.45)' }
+            }
+          }
+        }
+      });
+    }
+
+    function renderCategoryChart() {
+      const selectedYear = document.getElementById('dashCategoryYearSelect').value || 'ALL';
+      const sourceItems = selectedYear === 'ALL'
+        ? AppState.pekerjaanList
+        : AppState.pekerjaanList.filter(p => String(p.tanggal || '').startsWith(selectedYear));
+
+      const wrapper = document.getElementById('categoryChartWrapper');
+      const emptyBox = document.getElementById('categoryChartEmpty');
+
+      if (sourceItems.length === 0) {
+        wrapper.classList.add('hidden');
+        emptyBox.classList.remove('hidden');
+        if (AppState.charts.category) {
+          AppState.charts.category.destroy();
+          AppState.charts.category = null;
+        }
+        return;
+      }
+
+      wrapper.classList.remove('hidden');
+      emptyBox.classList.add('hidden');
+
+      const countMap = {};
+      sourceItems.forEach(item => {
+        const key = item.jenisPekerjaan || 'Lainnya';
+        countMap[key] = (countMap[key] || 0) + 1;
+      });
+
+      const labels = Object.keys(countMap);
+      const values = labels.map(k => countMap[k]);
+
+      if (AppState.charts.category) {
+        AppState.charts.category.destroy();
+      }
+
+      if (typeof Chart === 'undefined') return;
+      const ctx = document.getElementById('categoryChartCanvas').getContext('2d');
+      AppState.charts.category = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels,
+          datasets: [{
+            data: values,
+            backgroundColor: labels.map((_, idx) => RETRO_CHART_PALETTE[idx % RETRO_CHART_PALETTE.length]),
+            borderColor: '#FFFDF8',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '56%',
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: { color: '#362419', font: { family: "'Plus Jakarta Sans', sans-serif", weight: '600' } }
+            },
+            tooltip: {
+              backgroundColor: '#362419',
+              callbacks: {
+                label: (context) => {
+                  const val = context.parsed;
+                  const total = values.reduce((a, b) => a + b, 0);
+                  const pct = total > 0 ? ((val / total) * 100).toFixed(1) : 0;
+                  return ` ${context.label}: ${val} pekerjaan (${pct}%)`;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    /* ==========================================
+       B. LOGIKA INPUT DATA PEKERJAAN & JENIS BARU
+       ========================================== */
+    function updateInputAutoNumber() {
+      const nextNo = AppState.pekerjaanList.length + 1;
+      const noEl = document.getElementById('inputAutoNo');
+      if (noEl) noEl.value = String(nextNo);
+    }
+
+    function updateDatePreview(inputId, previewId) {
+      const val = document.getElementById(inputId).value;
+      const prevEl = document.getElementById(previewId);
+      if (prevEl) {
+        prevEl.textContent = val ? formatISOToDDMMYYYY(val) : 'DD/MM/YYYY';
+      }
+    }
+
+    function prepareInputFormDefaults() {
+      updateInputAutoNumber();
+      const dateInput = document.getElementById('inputTanggal');
+      if (!dateInput.value) {
+        dateInput.value = getJakartaTodayISO();
+      }
+      updateDatePreview('inputTanggal', 'inputTanggalPreview');
+    }
+
+    function resetInputForm() {
+      document.getElementById('inputTanggal').value = getJakartaTodayISO();
+      updateDatePreview('inputTanggal', 'inputTanggalPreview');
+      document.getElementById('inputJenisPekerjaan').value = '';
+      document.getElementById('inputUraianPekerjaan').value = '';
+      document.getElementById('inputCharCount').textContent = '0 karakter';
+      document.getElementById('addJenisInlineBox').classList.add('hidden');
+      document.getElementById('newJenisInput').value = '';
+      updateInputAutoNumber();
+    }
+
+    async function handleAddNewJenisPekerjaan() {
+      if (AppState.isSubmitting) return;
+      const inputEl = document.getElementById('newJenisInput');
+      const namaJenis = inputEl.value.trim();
+
+      if (!namaJenis) {
+        showToast('Nama jenis pekerjaan baru tidak boleh kosong.', 'error');
+        inputEl.focus();
+        return;
+      }
+
+      // Cek duplikasi case-insensitive di frontend sebelum memanggil API
+      const isDuplicate = AppState.jenisList.some(
+        j => String(j.namaJenis || '').trim().toLowerCase() === namaJenis.toLowerCase()
+      );
+      if (isDuplicate) {
+        showToast(`Jenis pekerjaan "${namaJenis}" sudah terdaftar.`, 'error');
+        inputEl.focus();
+        return;
+      }
+
+      const btn = document.getElementById('saveNewJenisBtn');
+      AppState.isSubmitting = true;
+      btn.disabled = true;
+      const oldHtml = btn.innerHTML;
+      btn.innerHTML = '<span class="spinner"></span><span>Menyimpan...</span>';
+
+      try {
+        const res = await callApi('addJenisPekerjaan', { namaJenis }, true);
+        if (res.data && Array.isArray(res.data.jenisPekerjaan)) {
+          AppState.jenisList = res.data.jenisPekerjaan;
+        }
+        populateAllDropdowns();
+        document.getElementById('inputJenisPekerjaan').value = res.data.created ? res.data.created.namaJenis : namaJenis;
+        inputEl.value = '';
+        document.getElementById('addJenisInlineBox').classList.add('hidden');
+        renderDashboard();
+        showToast(res.message || 'Jenis pekerjaan baru berhasil ditambahkan.', 'success');
+      } catch (err) {
+        showToast(err.message, 'error');
+      } finally {
+        AppState.isSubmitting = false;
+        btn.disabled = false;
+        btn.innerHTML = oldHtml;
+      }
+    }
+
+    async function handleSavePekerjaanSubmit(e) {
+      e.preventDefault();
+      if (AppState.isSubmitting) return;
+
+      const tanggal = document.getElementById('inputTanggal').value.trim();
+      const jenisPekerjaan = document.getElementById('inputJenisPekerjaan').value.trim();
+      const pekerjaan = document.getElementById('inputUraianPekerjaan').value;
+
+      if (!tanggal) {
+        showToast('Tanggal pekerjaan wajib dipilih.', 'error');
+        document.getElementById('inputTanggal').focus();
+        return;
+      }
+      if (!jenisPekerjaan) {
+        showToast('Jenis pekerjaan wajib dipilih.', 'error');
+        document.getElementById('inputJenisPekerjaan').focus();
+        return;
+      }
+      if (!pekerjaan || !pekerjaan.trim()) {
+        showToast('Uraian pekerjaan wajib diisi.', 'error');
+        document.getElementById('inputUraianPekerjaan').focus();
+        return;
+      }
+
+      const btn = document.getElementById('savePekerjaanBtn');
+      AppState.isSubmitting = true;
+      btn.disabled = true;
+      const oldHtml = btn.innerHTML;
+      btn.innerHTML = '<span class="spinner"></span><span>Menyimpan ke Database...</span>';
+
+      try {
+        const res = await callApi('addPekerjaan', {
+          tanggal,
+          jenisPekerjaan,
+          pekerjaan: pekerjaan.trim()
+        }, true);
+
+        if (res.data && Array.isArray(res.data.pekerjaan)) {
+          AppState.pekerjaanList = sortPekerjaanNewestFirst(res.data.pekerjaan);
+        } else {
+          await syncAllDatabaseData(true);
+        }
+
+        resetInputForm();
+        populateAllDropdowns();
+        renderDashboard();
+        applyDataFilters();
+        updateExportPreviews();
+
+        showToast(res.message || 'Data pekerjaan berhasil disimpan ke Google Spreadsheet.', 'success');
+      } catch (err) {
+        showToast(err.message, 'error', 5000);
+      } finally {
+        AppState.isSubmitting = false;
+        btn.disabled = false;
+        btn.innerHTML = oldHtml;
+      }
+    }
+
+    /* ==========================================
+       C. DATA PEKERJAAN (FILTER, TABEL, EDIT, HAPUS)
+       ========================================== */
+    function applyDataFilters() {
+      const jenisVal = document.getElementById('filterJenisSelect').value;
+      const bulanVal = document.getElementById('filterBulanSelect').value;
+      const tahunVal = document.getElementById('filterTahunSelect').value;
+      const startDate = document.getElementById('filterStartDate').value;
+      const endDate = document.getElementById('filterEndDate').value;
+      const keyword = document.getElementById('filterKeywordInput').value.trim().toLowerCase();
+
+      AppState.filteredList = AppState.pekerjaanList.filter(item => {
+        const tgl = String(item.tanggal || '').slice(0, 10);
+        if (jenisVal && item.jenisPekerjaan !== jenisVal) return false;
+        if (tahunVal && tgl.slice(0, 4) !== tahunVal) return false;
+        if (bulanVal && tgl.slice(5, 7) !== bulanVal) return false;
+        if (startDate && tgl < startDate) return false;
+        if (endDate && tgl > endDate) return false;
+        if (keyword) {
+          const hay = `${item.pekerjaan || ''} ${item.jenisPekerjaan || ''}`.toLowerCase();
+          if (!hay.includes(keyword)) return false;
+        }
+        return true;
+      });
+
+      AppState.currentPage = 1;
+      renderDataTable();
+    }
+
+    function resetDataFilters() {
+      document.getElementById('filterJenisSelect').value = '';
+      document.getElementById('filterBulanSelect').value = '';
+      document.getElementById('filterTahunSelect').value = '';
+      document.getElementById('filterStartDate').value = '';
+      document.getElementById('filterEndDate').value = '';
+      document.getElementById('filterKeywordInput').value = '';
+      applyDataFilters();
+    }
+
+    function renderDataTable() {
+      const tbody = document.getElementById('pekerjaanTableBody');
+      const tableContainer = document.getElementById('dataTableContainer');
+      const emptyBox = document.getElementById('dataTableEmpty');
+      const footerBar = document.getElementById('tablePaginationFooter');
+
+      const totalItems = AppState.filteredList.length;
+
+      if (totalItems === 0) {
+        tbody.innerHTML = '';
+        tableContainer.classList.add('hidden');
+        footerBar.classList.add('hidden');
+        emptyBox.classList.remove('hidden');
+        return;
+      }
+
+      tableContainer.classList.remove('hidden');
+      footerBar.classList.remove('hidden');
+      emptyBox.classList.add('hidden');
+
+      const totalPages = Math.max(1, Math.ceil(totalItems / AppState.pageSize));
+      if (AppState.currentPage > totalPages) AppState.currentPage = totalPages;
+
+      const startIdx = (AppState.currentPage - 1) * AppState.pageSize;
+      const endIdx = Math.min(startIdx + AppState.pageSize, totalItems);
+      const pageItems = AppState.filteredList.slice(startIdx, endIdx);
+
+      tbody.innerHTML = '';
+
+      pageItems.forEach((item, index) => {
+        const tr = document.createElement('tr');
+
+        // Kolom No (Dinamis)
+        const tdNo = document.createElement('td');
+        tdNo.className = 'col-no';
+        tdNo.textContent = String(startIdx + index + 1);
+
+        // Kolom Tanggal (DD/MM/YYYY)
+        const tdDate = document.createElement('td');
+        tdDate.className = 'col-date';
+        tdDate.textContent = formatISOToDDMMYYYY(item.tanggal);
+
+        // Kolom Jenis Pekerjaan
+        const tdJenis = document.createElement('td');
+        tdJenis.className = 'col-jenis';
+        const badge = document.createElement('span');
+        badge.className = 'jenis-badge';
+        badge.textContent = item.jenisPekerjaan || '-';
+        tdJenis.appendChild(badge);
+
+        // Kolom Pekerjaan (Aman XSS dengan textContent & white-space: pre-wrap)
+        const tdPekerjaan = document.createElement('td');
+        const textDiv = document.createElement('div');
+        textDiv.className = 'pekerjaan-text';
+        textDiv.textContent = item.pekerjaan || '';
+        tdPekerjaan.appendChild(textDiv);
+
+        // Kolom Aksi (Menggunakan ID Unik Permanen)
+        const tdAksi = document.createElement('td');
+        tdAksi.className = 'col-aksi';
+        const btnGroup = document.createElement('div');
+        btnGroup.className = 'action-btn-group';
+
+        const editBtn = document.createElement('button');
+        editBtn.type = 'button';
+        editBtn.className = 'btn btn-secondary btn-sm';
+        editBtn.title = 'Edit data pekerjaan ini';
+        editBtn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg><span>Edit</span>';
+        editBtn.addEventListener('click', () => openEditModal(item.id));
+
+        const delBtn = document.createElement('button');
+        delBtn.type = 'button';
+        delBtn.className = 'btn btn-danger btn-sm';
+        delBtn.title = 'Hapus data pekerjaan ini';
+        delBtn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg><span>Hapus</span>';
+        delBtn.addEventListener('click', () => openDeleteModal(item.id));
+
+        btnGroup.appendChild(editBtn);
+        btnGroup.appendChild(delBtn);
+        tdAksi.appendChild(btnGroup);
+
+        tr.appendChild(tdNo);
+        tr.appendChild(tdDate);
+        tr.appendChild(tdJenis);
+        tr.appendChild(tdPekerjaan);
+        tr.appendChild(tdAksi);
+
+        tbody.appendChild(tr);
+      });
+
+      document.getElementById('paginationInfoText').textContent =
+        `Menampilkan ${startIdx + 1}–${endIdx} dari ${totalItems} data pekerjaan`;
+
+      renderPaginationButtons(totalPages);
+    }
+
+    function renderPaginationButtons(totalPages) {
+      const container = document.getElementById('paginationButtons');
+      container.innerHTML = '';
+
+      if (totalPages <= 1) return;
+
+      const prevBtn = document.createElement('button');
+      prevBtn.type = 'button';
+      prevBtn.className = 'btn btn-secondary btn-sm';
+      prevBtn.textContent = '‹ Sebelumnya';
+      prevBtn.disabled = AppState.currentPage === 1;
+      prevBtn.addEventListener('click', () => {
+        if (AppState.currentPage > 1) {
+          AppState.currentPage--;
+          renderDataTable();
+        }
+      });
+      container.appendChild(prevBtn);
+
+      const maxVisible = 5;
+      let startPage = Math.max(1, AppState.currentPage - 2);
+      let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+      if (endPage - startPage < maxVisible - 1) {
+        startPage = Math.max(1, endPage - maxVisible + 1);
+      }
+
+      for (let p = startPage; p <= endPage; p++) {
+        const pageBtn = document.createElement('button');
+        pageBtn.type = 'button';
+        pageBtn.className = p === AppState.currentPage ? 'btn btn-primary btn-sm' : 'btn btn-secondary btn-sm';
+        pageBtn.textContent = String(p);
+        pageBtn.addEventListener('click', () => {
+          AppState.currentPage = p;
+          renderDataTable();
+        });
+        container.appendChild(pageBtn);
+      }
+
+      const nextBtn = document.createElement('button');
+      nextBtn.type = 'button';
+      nextBtn.className = 'btn btn-secondary btn-sm';
+      nextBtn.textContent = 'Berikutnya ›';
+      nextBtn.disabled = AppState.currentPage === totalPages;
+      nextBtn.addEventListener('click', () => {
+        if (AppState.currentPage < totalPages) {
+          AppState.currentPage++;
+          renderDataTable();
+        }
+      });
+      container.appendChild(nextBtn);
+    }
+
+    /* ==========================================
+       MODAL EDIT & HAPUS DATA
+       ========================================== */
+    function openEditModal(uniqueId) {
+      const item = AppState.pekerjaanList.find(p => p.id === uniqueId);
+      if (!item) {
+        showToast('Data pekerjaan tidak ditemukan.', 'error');
+        return;
+      }
+
+      populateAllDropdowns();
+      document.getElementById('editPekerjaanId').value = item.id;
+      document.getElementById('editTanggal').value = String(item.tanggal || '').slice(0, 10);
+      updateDatePreview('editTanggal', 'editTanggalPreview');
+
+      const editSelect = document.getElementById('editJenisPekerjaan');
+      if (!Array.from(editSelect.options).some(o => o.value === item.jenisPekerjaan)) {
+        const opt = document.createElement('option');
+        opt.value = item.jenisPekerjaan;
+        opt.textContent = item.jenisPekerjaan;
+        editSelect.appendChild(opt);
+      }
+      editSelect.value = item.jenisPekerjaan;
+      document.getElementById('editUraianPekerjaan').value = item.pekerjaan || '';
+
+      document.getElementById('editModal').classList.remove('hidden');
+    }
+
+    function closeEditModal() {
+      document.getElementById('editModal').classList.add('hidden');
+    }
+
+    async function handleUpdatePekerjaanSubmit(e) {
+      e.preventDefault();
+      if (AppState.isSubmitting) return;
+
+      const id = document.getElementById('editPekerjaanId').value;
+      const tanggal = document.getElementById('editTanggal').value.trim();
+      const jenisPekerjaan = document.getElementById('editJenisPekerjaan').value.trim();
+      const pekerjaan = document.getElementById('editUraianPekerjaan').value;
+
+      if (!id || !tanggal || !jenisPekerjaan || !pekerjaan || !pekerjaan.trim()) {
+        showToast('Seluruh kolom pada formulir edit wajib diisi.', 'error');
+        return;
+      }
+
+      const btn = document.getElementById('updatePekerjaanBtn');
+      AppState.isSubmitting = true;
+      btn.disabled = true;
+      const oldHtml = btn.innerHTML;
+      btn.innerHTML = '<span class="spinner"></span><span>Menyimpan...</span>';
+
+      try {
+        const res = await callApi('updatePekerjaan', {
+          id,
+          tanggal,
+          jenisPekerjaan,
+          pekerjaan: pekerjaan.trim()
+        }, true);
+
+        if (res.data && Array.isArray(res.data.pekerjaan)) {
+          AppState.pekerjaanList = sortPekerjaanNewestFirst(res.data.pekerjaan);
+        } else {
+          await syncAllDatabaseData(true);
+        }
+
+        closeEditModal();
+        populateAllDropdowns();
+        renderDashboard();
+        applyDataFilters();
+        updateExportPreviews();
+
+        showToast(res.message || 'Perubahan data berhasil disimpan.', 'success');
+      } catch (err) {
+        showToast(err.message, 'error');
+      } finally {
+        AppState.isSubmitting = false;
+        btn.disabled = false;
+        btn.innerHTML = oldHtml;
+      }
+    }
+
+    function openDeleteModal(uniqueId) {
+      const item = AppState.pekerjaanList.find(p => p.id === uniqueId);
+      if (!item) {
+        showToast('Data pekerjaan tidak ditemukan.', 'error');
+        return;
+      }
+
+      document.getElementById('deleteTargetId').value = item.id;
+      const summaryBox = document.getElementById('deleteItemSummary');
+      summaryBox.innerHTML = '';
+
+      const line1 = document.createElement('div');
+      line1.innerHTML = `<strong>Tanggal:</strong> ${formatISOToDDMMYYYY(item.tanggal)} &bull; <strong>Jenis:</strong> `;
+      const spanJenis = document.createElement('span');
+      spanJenis.textContent = item.jenisPekerjaan;
+      line1.appendChild(spanJenis);
+
+      const line2 = document.createElement('div');
+      line2.style.marginTop = '6px';
+      line2.style.color = 'var(--brown-muted)';
+      const snippet = String(item.pekerjaan || '');
+      line2.textContent = snippet.length > 140 ? snippet.slice(0, 140) + '...' : snippet;
+
+      summaryBox.appendChild(line1);
+      summaryBox.appendChild(line2);
+
+      document.getElementById('deleteModal').classList.remove('hidden');
+    }
+
+    function closeDeleteModal() {
+      document.getElementById('deleteModal').classList.add('hidden');
+    }
+
+    async function handleConfirmDelete() {
+      if (AppState.isSubmitting) return;
+      const id = document.getElementById('deleteTargetId').value;
+      if (!id) return;
+
+      const btn = document.getElementById('confirmDeleteBtn');
+      AppState.isSubmitting = true;
+      btn.disabled = true;
+      const oldHtml = btn.innerHTML;
+      btn.innerHTML = '<span class="spinner"></span><span>Menghapus...</span>';
+
+      try {
+        const res = await callApi('deletePekerjaan', { id }, true);
+        if (res.data && Array.isArray(res.data.pekerjaan)) {
+          AppState.pekerjaanList = sortPekerjaanNewestFirst(res.data.pekerjaan);
+        } else {
+          await syncAllDatabaseData(true);
+        }
+
+        closeDeleteModal();
+        populateAllDropdowns();
+        updateInputAutoNumber();
+        renderDashboard();
+        applyDataFilters();
+        updateExportPreviews();
+
+        showToast(res.message || 'Data pekerjaan berhasil dihapus.', 'success');
+      } catch (err) {
+        showToast(err.message, 'error');
+      } finally {
+        AppState.isSubmitting = false;
+        btn.disabled = false;
+        btn.innerHTML = oldHtml;
+      }
+    }
+
+    /* ==========================================
+       D. EKSPOR DATA CSV (EXCEL COMPATIBLE & AMAN)
+       ========================================== */
+    function sanitizeCsvCell(value) {
+      let str = value === null || value === undefined ? '' : String(value);
+      // Pengamanan terhadap CSV / Formula Injection (=, +, -, @, Tab, CR)
+      if (/^[=+\-@\t\r]/.test(str)) {
+        str = `'${str}`;
+      }
+      // Bungkus dengan tanda kutip ganda agar baris baru dan koma tidak memecah kolom
+      return `"${str.replace(/"/g, '""')}"`;
+    }
+
+    function downloadRecordsAsCsv(records, filename) {
+      const headers = ['No', 'ID', 'Tanggal', 'Jenis Pekerjaan', 'Pekerjaan', 'Dibuat Pada', 'Diubah Pada'];
+      const lines = [headers.map(sanitizeCsvCell).join(',')];
+
+      // Urutkan kronologis atau terbaru sesuai tampilan tabel
+      records.forEach((item, idx) => {
+        const row = [
+          idx + 1,
+          item.id || '',
+          formatISOToDDMMYYYY(item.tanggal),
+          item.jenisPekerjaan || '',
+          item.pekerjaan || '',
+          item.dibuatPada || '',
+          item.diubahPada || ''
+        ];
+        lines.push(row.map(sanitizeCsvCell).join(','));
+      });
+
+      // UTF-8 BOM (\uFEFF) agar Microsoft Excel membaca karakter Bahasa Indonesia dengan sempurna
+      const csvContent = '\uFEFF' + lines.join('\r\n');
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    function updateExportPreviews() {
+      const mYear = document.getElementById('exportMonthYearSelect').value || getJakartaParts().year;
+      const mCode = document.getElementById('exportMonthSelect').value || getJakartaParts().month;
+      const ymPrefix = `${mYear}-${mCode}`;
+
+      const monthlyRecords = AppState.pekerjaanList.filter(p => String(p.tanggal || '').startsWith(ymPrefix));
+      document.getElementById('exportMonthlyCountBadge').textContent = `${monthlyRecords.length} data`;
+
+      const aYear = document.getElementById('exportAnnualYearSelect').value || getJakartaParts().year;
+      const annualRecords = AppState.pekerjaanList.filter(p => String(p.tanggal || '').startsWith(aYear));
+      document.getElementById('exportAnnualCountBadge').textContent = `${annualRecords.length} data`;
+      document.getElementById('exportAnnualFilenamePreview').value = `Data_Pekerjaan_Tahun_${aYear}.csv`;
+    }
+
+    function handleExportMonthly() {
+      const year = document.getElementById('exportMonthYearSelect').value;
+      const monthCode = document.getElementById('exportMonthSelect').value;
+      const monthName = NAMA_BULAN[parseInt(monthCode, 10) - 1] || monthCode;
+      const prefix = `${year}-${monthCode}`;
+
+      const records = AppState.pekerjaanList.filter(p => String(p.tanggal || '').startsWith(prefix));
+      if (records.length === 0) {
+        showToast(`Tidak ada data pekerjaan pada periode ${monthName} ${year}.`, 'warning');
+        return;
+      }
+
+      const filename = `Data_Pekerjaan_${monthName}_${year}.csv`;
+      downloadRecordsAsCsv(records, filename);
+      showToast(`Berhasil mengekspor ${records.length} data (${filename}).`, 'success');
+    }
+
+    function handleExportAnnual() {
+      const year = document.getElementById('exportAnnualYearSelect').value;
+      const records = AppState.pekerjaanList.filter(p => String(p.tanggal || '').startsWith(year));
+
+      if (records.length === 0) {
+        showToast(`Tidak ada data pekerjaan pada Tahun ${year}.`, 'warning');
+        return;
+      }
+
+      const filename = `Data_Pekerjaan_Tahun_${year}.csv`;
+      downloadRecordsAsCsv(records, filename);
+      showToast(`Berhasil mengekspor ${records.length} data (${filename}).`, 'success');
+    }
+
+    /* ==========================================
+       E. PENGATURAN ADMIN (UBAH USERNAME & PASSWORD)
+       ========================================== */
+    async function handleAdminCredentialsSubmit(e) {
+      e.preventDefault();
+      if (AppState.isSubmitting) return;
+
+      const newUsername = document.getElementById('adminNewUsername').value.trim();
+      const currentPassword = document.getElementById('adminCurrentPassword').value;
+      const newPassword = document.getElementById('adminNewPassword').value;
+      const confirmPassword = document.getElementById('adminConfirmPassword').value;
+
+      if (!newUsername || newUsername.length < 3) {
+        showToast('Username baru wajib diisi minimal 3 karakter.', 'error');
+        return;
+      }
+      if (!currentPassword) {
+        showToast('Password lama wajib diisi untuk verifikasi.', 'error');
+        return;
+      }
+      if (!newPassword || newPassword.length < 6) {
+        showToast('Password baru wajib minimal 6 karakter.', 'error');
+        return;
+      }
+      if (newPassword === 'admin123') {
+        showToast('Password baru tidak boleh menggunakan password default admin123.', 'error');
+        return;
+      }
+      if (newPassword !== confirmPassword) {
+        showToast('Konfirmasi password baru tidak cocok.', 'error');
+        return;
+      }
+
+      const btn = document.getElementById('saveAdminBtn');
+      AppState.isSubmitting = true;
+      btn.disabled = true;
+      const oldHtml = btn.innerHTML;
+      btn.innerHTML = '<span class="spinner"></span><span>Memperbarui Kredensial...</span>';
+
+      try {
+        const res = await callApi('updateAdminCredentials', {
+          newUsername,
+          currentPassword,
+          newPassword,
+          confirmPassword
+        }, true);
+
+        document.getElementById('adminCurrentPassword').value = '';
+        document.getElementById('adminNewPassword').value = '';
+        document.getElementById('adminConfirmPassword').value = '';
+
+        showToast(res.message || 'Username dan password berhasil diperbarui. Silakan login kembali.', 'success', 5000);
+        setTimeout(() => {
+          forceLogoutToLogin('Kredensial akun telah diperbarui. Silakan login menggunakan username dan password baru Anda.');
+        }, 900);
+      } catch (err) {
+        showToast(err.message, 'error', 5000);
+      } finally {
+        AppState.isSubmitting = false;
+        btn.disabled = false;
+        btn.innerHTML = oldHtml;
+      }
+    }
+
+    /* ==========================================
+       INISIALISASI EVENT LISTENERS & STARTUP
+       ========================================== */
+    document.addEventListener('DOMContentLoaded', async () => {
+      updateWibClock();
+      setInterval(updateWibClock, 1000);
+
+      // Cek masa berlaku sesi secara berkala setiap 30 detik
+      setInterval(() => {
+        if (!document.getElementById('appShell').classList.contains('hidden')) {
+          const s = loadSession();
+          if (!s) {
+            forceLogoutToLogin('Sesi Anda telah kedaluwarsa. Silakan login kembali.');
+          }
+        }
+      }, 30000);
+
+      setupPasswordToggles();
+
+      // Set bulan default pada menu Ekspor sesuai bulan berjalan WIB
+      const jakartaNow = getJakartaParts();
+      document.getElementById('exportMonthSelect').value = jakartaNow.month;
+
+      // Login & Logout
+      document.getElementById('loginForm').addEventListener('submit', handleLoginSubmit);
+      document.getElementById('logoutMenuBtn').addEventListener('click', handleLogout);
+
+      // Navigasi Sidebar
+      document.querySelectorAll('.nav-item[data-view]').forEach(btn => {
+        btn.addEventListener('click', () => switchView(btn.getAttribute('data-view')));
+      });
+      document.getElementById('mobileMenuBtn').addEventListener('click', openMobileSidebar);
+      document.getElementById('sidebarBackdrop').addEventListener('click', closeMobileSidebar);
+      document.getElementById('syncDataBtn').addEventListener('click', () => syncAllDatabaseData(false));
+
+      // Dashboard Filter Grafik
+      document.getElementById('dashMonthlyYearSelect').addEventListener('change', renderMonthlyChart);
+      document.getElementById('dashYearlyFilterSelect').addEventListener('change', renderYearlyChart);
+      document.getElementById('dashCategoryYearSelect').addEventListener('change', renderCategoryChart);
+
+      // Input Data Pekerjaan
+      document.getElementById('inputTanggal').addEventListener('change', () => updateDatePreview('inputTanggal', 'inputTanggalPreview'));
+      document.getElementById('editTanggal').addEventListener('change', () => updateDatePreview('editTanggal', 'editTanggalPreview'));
+      document.getElementById('inputUraianPekerjaan').addEventListener('input', (e) => {
+        document.getElementById('inputCharCount').textContent = `${e.target.value.length} karakter`;
+      });
+      document.getElementById('toggleAddJenisBtn').addEventListener('click', () => {
+        const box = document.getElementById('addJenisInlineBox');
+        box.classList.toggle('hidden');
+        if (!box.classList.contains('hidden')) {
+          document.getElementById('newJenisInput').focus();
+        }
+      });
+      document.getElementById('cancelNewJenisBtn').addEventListener('click', () => {
+        document.getElementById('addJenisInlineBox').classList.add('hidden');
+        document.getElementById('newJenisInput').value = '';
+      });
+      document.getElementById('saveNewJenisBtn').addEventListener('click', handleAddNewJenisPekerjaan);
+      document.getElementById('inputPekerjaanForm').addEventListener('submit', handleSavePekerjaanSubmit);
+      document.getElementById('resetInputFormBtn').addEventListener('click', resetInputForm);
+      document.getElementById('cancelInputFormBtn').addEventListener('click', () => {
+        resetInputForm();
+        switchView('dashboard');
+      });
+
+      // Filter & Tabel Data Pekerjaan
+      document.getElementById('filterJenisSelect').addEventListener('change', applyDataFilters);
+      document.getElementById('filterBulanSelect').addEventListener('change', applyDataFilters);
+      document.getElementById('filterTahunSelect').addEventListener('change', applyDataFilters);
+      document.getElementById('filterStartDate').addEventListener('change', applyDataFilters);
+      document.getElementById('filterEndDate').addEventListener('change', applyDataFilters);
+      document.getElementById('filterKeywordInput').addEventListener('input', applyDataFilters);
+      document.getElementById('resetFilterBtn').addEventListener('click', resetDataFilters);
+      document.getElementById('pageSizeSelect').addEventListener('change', (e) => {
+        AppState.pageSize = parseInt(e.target.value, 10) || 10;
+        AppState.currentPage = 1;
+        renderDataTable();
+      });
+
+      // Modal Edit & Hapus
+      document.getElementById('editPekerjaanForm').addEventListener('submit', handleUpdatePekerjaanSubmit);
+      document.getElementById('confirmDeleteBtn').addEventListener('click', handleConfirmDelete);
+
+      // Ekspor Data
+      document.getElementById('exportMonthYearSelect').addEventListener('change', updateExportPreviews);
+      document.getElementById('exportMonthSelect').addEventListener('change', updateExportPreviews);
+      document.getElementById('exportAnnualYearSelect').addEventListener('change', updateExportPreviews);
+      document.getElementById('btnExportMonthly').addEventListener('click', handleExportMonthly);
+      document.getElementById('btnExportAnnual').addEventListener('click', handleExportAnnual);
+
+      // Admin Credentials
+      document.getElementById('adminCredentialsForm').addEventListener('submit', handleAdminCredentialsSubmit);
+
+      // Cek sesi yang masih aktif di sessionStorage
+      const existingSession = loadSession();
+      if (existingSession) {
+        try {
+          const check = await callApi('validateSession', {}, true);
+          saveSession({
+            ...existingSession,
+            username: check.data.username,
+            expiresAt: check.data.expiresAt,
+            mustChangePassword: check.data.mustChangePassword
+          });
+          await enterAuthenticatedApp();
+        } catch (err) {
+          forceLogoutToLogin('');
+        }
+      }
+    });
+  </script>
+</body>
+</html>
